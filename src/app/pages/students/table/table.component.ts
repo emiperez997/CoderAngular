@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -25,6 +19,7 @@ import { FullNamePipe } from '../pipes/full-name.pipe';
 import { StatusPipe } from '../../../common/pipes/status-pipe';
 import { StatusDirective } from '../../../common/directives/status.directive';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ConfirmDialogComponent } from '../../../common/components/dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-students-table',
@@ -134,14 +129,28 @@ export class TableComponent implements OnInit {
   }
 
   deleteStudent(id: number) {
-    this.isLoading = true;
-    this.studentService.deleteStudent(id).subscribe({
-      next: (students) => {
-        this.dataSource.data = [...students];
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: {
+          title: 'Confirmar Eliminación',
+          message: '¿Está seguro de eliminar este alumno?',
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.isLoading = true;
+            this.studentService.deleteStudent(id).subscribe({
+              next: (students) => {
+                this.dataSource.data = [...students];
+              },
+              complete: () => {
+                this.isLoading = false;
+              },
+            });
+          }
+        },
+      });
   }
 }

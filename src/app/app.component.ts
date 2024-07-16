@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LayoutModule } from './modules/layout/layout.module';
+import { LayoutModule } from './layout/layout.module';
 import { ThemeService } from './services/theme/theme.service';
 
 @Component({

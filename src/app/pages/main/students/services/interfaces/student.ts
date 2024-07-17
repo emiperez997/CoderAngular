@@ -1,4 +1,4 @@
-import { Status } from '../../../common/interfaces/status';
+import { Status } from '../../../../../common/interfaces/status';
 
 export interface Student {
   id: number;

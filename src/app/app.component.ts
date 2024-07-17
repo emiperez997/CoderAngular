@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LayoutModule } from './layout/layout.module';
-import { ThemeService } from './services/theme/theme.service';
+
+import { ThemeService } from './common/services/theme/theme.service';
+
+import { MainModule } from './pages/main/main.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LayoutModule],
+  imports: [RouterOutlet, MainModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [ThemeService],

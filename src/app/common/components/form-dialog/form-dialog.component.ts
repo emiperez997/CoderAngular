@@ -16,7 +16,7 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
-import { Student } from '../../../services/students/interfaces/student';
+import { Student } from '../../../pages/main/students/services/interfaces/student';
 
 @Component({
   selector: 'app-dialog',
@@ -32,17 +32,17 @@ import { Student } from '../../../services/students/interfaces/student';
     MatDialogModule,
     MatButtonModule,
   ],
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss',
+  templateUrl: './form-dialog.component.html',
+  styleUrl: './form-dialog.component.scss',
   providers: [provideNativeDateAdapter()],
 })
-export class DialogComponent {
+export class FormDialogComponent {
   createForm: FormGroup;
   isEditing: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private matDialogRef: MatDialogRef<DialogComponent>,
+    private matDialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public editingStudent?: Student,
   ) {
     this.createForm = this.fb.group(formGroup);

@@ -4,22 +4,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  Student,
-  studentColumns,
-} from '../../../services/students/interfaces/student';
-import { StudentsService } from '../../../services/students/students.service';
+
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
-import { FullNamePipe } from '../pipes/full-name.pipe';
-import { StatusPipe } from '../../../common/pipes/status-pipe';
-import { StatusDirective } from '../../../common/directives/status.directive';
+
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { ConfirmDialogComponent } from '../../../common/components/dialog/confirm-dialog.component';
+import { FullNamePipe } from '../../../../../common/pipes/full-name.pipe';
+import { StatusPipe } from '../../../../../common/pipes/status-pipe';
+import { StatusDirective } from '../../../../../common/directives/status.directive';
+import { StudentsService } from '../../services/students.service';
+import { Student, studentColumns } from '../../services/interfaces/student';
+import { ConfirmDialogComponent } from '../../../../../common/components/confirm-dialog/confirm-dialog.component';
+import { FormDialogComponent } from '../../../../../common/components/form-dialog/form-dialog.component';
 
 @Component({
   selector: 'app-students-table',
@@ -86,7 +85,7 @@ export class TableComponent implements OnInit {
 
   openForm() {
     this.dialog
-      .open(DialogComponent)
+      .open(FormDialogComponent)
       .afterClosed()
       .subscribe({
         next: (student) => {
@@ -107,7 +106,7 @@ export class TableComponent implements OnInit {
 
   editStudent(student: Student) {
     this.dialog
-      .open(DialogComponent, {
+      .open(FormDialogComponent, {
         data: student,
       })
       .afterClosed()

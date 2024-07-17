@@ -1,4 +1,4 @@
-import { Status } from '../../../common/interfaces/status';
+import { Status } from '../../../../../common/interfaces/status';
 import { Student } from '../interfaces/student';
 
 export const mockStudents: Student[] = [

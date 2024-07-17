@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from './layout.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+
+import { StudentsComponent } from './students/students.component';
+import { TitleDirective } from '../../common/directives/title.directive';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { TableComponent } from '../pages/students/table/table.component';
-import { TitleDirective } from '../common/directives/title.directive';
+import { MainComponent } from './main.component';
 
 @NgModule({
-  declarations: [LayoutComponent],
+  declarations: [MainComponent],
   imports: [
     CommonModule,
     ToolbarComponent,
@@ -21,9 +22,9 @@ import { TitleDirective } from '../common/directives/title.directive';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    TableComponent,
+    StudentsComponent,
     TitleDirective,
   ],
-  exports: [LayoutComponent],
+  exports: [MainComponent],
 })
-export class LayoutModule {}
+export class MainModule {}

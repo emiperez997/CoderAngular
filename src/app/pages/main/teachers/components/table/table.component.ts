@@ -15,13 +15,15 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { FullNamePipe } from '../../../../../common/pipes/full-name.pipe';
 import { StatusPipe } from '../../../../../common/pipes/status-pipe';
 import { StatusDirective } from '../../../../../common/directives/status.directive';
-import { StudentsService } from '../../services/students.service';
-import { Student, studentColumns } from '../../services/models/Student';
+
 import { ConfirmDialogComponent } from '../../../../../common/components/confirm-dialog/confirm-dialog.component';
 import { FormDialogComponent } from '../../../../../common/components/form-dialog/form-dialog.component';
+import { TeachersService } from '../../services/teachers.service';
+
+import { Teacher, teacherColumns } from '../../services/models/Teacher';
 
 @Component({
-  selector: 'app-students-table',
+  selector: 'app-teachers-table',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,28 +43,28 @@ import { FormDialogComponent } from '../../../../../common/components/form-dialo
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
-  providers: [StudentsService],
+  providers: [TeachersService],
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
   isLoading = true;
   firstLoading = true;
 
-  displayedColumns: string[] = studentColumns;
-  dataSource!: MatTableDataSource<Student>;
+  displayedColumns: string[] = teacherColumns;
+  dataSource!: MatTableDataSource<Teacher>;
   skeletonRows: any[] = Array(5).fill({});
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(
-    private studentService: StudentsService,
+    private teacherService: TeachersService,
     private dialog: MatDialog,
   ) {}
 
   loadStudents() {
-    this.studentService.getStudents().subscribe((students) => {
-      this.dataSource = new MatTableDataSource(students);
+    this.teacherService.getTeacher().subscribe((teachers) => {
+      this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoading = false;
@@ -88,12 +90,12 @@ export class TableComponent implements OnInit {
       .open(FormDialogComponent)
       .afterClosed()
       .subscribe({
-        next: (student) => {
-          if (!!student) {
+        next: (teacher) => {
+          if (!!teacher) {
             this.isLoading = true;
-            this.studentService.addStudent(student).subscribe({
-              next: (students) => {
-                this.dataSource.data = [...students];
+            this.teacherService.addTeacher(teacher).subscribe({
+              next: (teachers) => {
+                this.dataSource.data = [...teachers];
               },
               complete: () => {
                 this.isLoading = false;
@@ -104,19 +106,19 @@ export class TableComponent implements OnInit {
       });
   }
 
-  editStudent(student: Student) {
+  editStudent(teacher: Teacher) {
     this.dialog
       .open(FormDialogComponent, {
-        data: student,
+        data: teacher,
       })
       .afterClosed()
       .subscribe({
-        next: (student) => {
-          if (!!student) {
+        next: (teacher) => {
+          if (!!teacher) {
             this.isLoading = true;
-            this.studentService.updateStudent(student).subscribe({
-              next: (students) => {
-                this.dataSource.data = [...students];
+            this.teacherService.updateTeacher(teacher).subscribe({
+              next: (teachers) => {
+                this.dataSource.data = [...teachers];
               },
               complete: () => {
                 this.isLoading = false;
@@ -140,9 +142,9 @@ export class TableComponent implements OnInit {
         next: (result) => {
           if (result) {
             this.isLoading = true;
-            this.studentService.deleteStudent(id).subscribe({
-              next: (students) => {
-                this.dataSource.data = [...students];
+            this.teacherService.deleteTeacher(id).subscribe({
+              next: (teachers) => {
+                this.dataSource.data = [...teachers];
               },
               complete: () => {
                 this.isLoading = false;

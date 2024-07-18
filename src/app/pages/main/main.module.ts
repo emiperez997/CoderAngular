@@ -11,6 +11,7 @@ import { TitleDirective } from '../../common/directives/title.directive';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MainComponent } from './main.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @NgModule({
   declarations: [MainComponent],
@@ -24,6 +25,7 @@ import { MainComponent } from './main.component';
     MatIconModule,
     StudentsComponent,
     TitleDirective,
+    RouterOutlet,
   ],
   exports: [MainComponent],
 })

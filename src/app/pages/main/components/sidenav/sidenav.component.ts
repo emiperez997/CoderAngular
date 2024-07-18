@@ -4,11 +4,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { ListItem } from './interfaces/ListItem';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatIconModule, MatDividerModule],
+  imports: [
+    CommonModule,
+    MatListModule,
+    MatIconModule,
+    MatDividerModule,
+    RouterLink,
+  ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
@@ -17,22 +24,27 @@ export class SidenavComponent {
     {
       name: 'Inicio',
       icon: 'home',
-      url: '/',
+      url: '/dashboard',
     },
     {
       name: 'Cursos',
       icon: 'school',
-      url: '/cursos',
+      url: 'courses',
     },
     {
       name: 'Alumnos',
       icon: 'people',
-      url: '/alumnos',
+      url: 'students',
     },
     {
       name: 'Inscripciones',
       icon: 'add',
-      url: '/inscripciones',
+      url: '/inscriptions',
+    },
+    {
+      name: 'Profesores',
+      icon: 'person',
+      url: 'teachers',
     },
   ];
 }

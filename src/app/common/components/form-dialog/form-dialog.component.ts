@@ -16,7 +16,7 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
-import { Student } from '../../../pages/main/students/services/interfaces/student';
+import { Student } from '../../../pages/main/students/services/models/Student';
 
 @Component({
   selector: 'app-dialog',

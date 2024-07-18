@@ -15,3 +15,17 @@
 - [ x ] Crear una directiva personalizada para cabeceras o títulos que tenga la letra con un tamaño de 20px
 - [ x ] Crear un pipe para el estado (muestra el texto de acuerdo al estado) y una directiva (muestra un color de acuerdo al estado)
 - [ x ] Subir el proyecto a GitHub
+
+# Segunda Entrega
+
+## Aspectos a incluir
+
+- [ ] Creación de servicios
+
+  - [ ] Que devuelvan un observable con datos mockeados
+  - [ ] ABM de las entidades
+
+- [ ] Uso de routing
+  - [ ] Utilizar la navegación del menú lateral
+- [ x ] Uso de Angular Material
+- [ ] Modularizar la aplicación en `app`, `core`, `sharedd` y `features`

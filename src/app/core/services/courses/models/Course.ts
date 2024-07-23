@@ -14,3 +14,14 @@ export interface Course {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export const courseColumns: string[] = [
+  'id',
+  'title',
+  'beginDate',
+  'endDate',
+  'isActive',
+  'createdAt',
+  'updatedAt',
+  'actions',
+];

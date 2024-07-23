@@ -21,6 +21,7 @@ import { CoursesService } from '../../../../../core/services/courses/courses.ser
 
 import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { FormDialogComponent } from '../form-dialog/form-dialog.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -40,6 +41,7 @@ import { FormDialogComponent } from '../form-dialog/form-dialog.component';
     StatusPipe,
     StatusDirective,
     NgxSkeletonLoaderModule,
+    RouterLink,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',

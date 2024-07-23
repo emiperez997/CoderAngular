@@ -40,7 +40,7 @@ export class SidenavComponent {
     {
       name: 'Inscripciones',
       icon: 'add',
-      url: '/inscriptions',
+      url: 'inscriptions',
     },
     {
       name: 'Profesores',

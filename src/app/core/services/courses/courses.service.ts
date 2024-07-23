@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Course } from './models/Course';
 import { mockCourses } from './data/mock';
 import { Observable } from 'rxjs';
+import { TeachersService } from '../teachers/teacher.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class CoursesService {
   private courses: Course[] = [];
 
-  constructor() {
+  constructor(private teachersService: TeachersService) {
     this.courses = mockCourses;
   }
 
@@ -17,6 +18,30 @@ export class CoursesService {
     return new Observable((observer) => {
       setTimeout(() => {
         observer.next(this.courses);
+        observer.complete();
+      }, 1500);
+    });
+  }
+
+  getCourse(id: number): Observable<Course | undefined> {
+    return new Observable((observer) => {
+      setTimeout(() => {
+        const course = this.courses.find((c) => c.id === id);
+
+        if (!course) {
+          observer.next(undefined);
+          observer.complete();
+          return;
+        }
+
+        this.teachersService
+          .getTeacher(course?.teacherId)
+          .subscribe((teacher) => {
+            course.teacher = teacher;
+            observer.next(course);
+            observer.complete();
+          });
+        observer.next(course);
         observer.complete();
       }, 1500);
     });

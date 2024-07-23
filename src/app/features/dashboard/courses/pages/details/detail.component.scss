@@ -1,0 +1,25 @@
+.course-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.active {
+  color: green;
+}
+
+.inactive {
+  color: red;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

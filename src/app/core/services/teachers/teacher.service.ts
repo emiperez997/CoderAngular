@@ -13,10 +13,20 @@ export class TeachersService {
     this.teachers = mockTeachers;
   }
 
-  getTeacher(): Observable<Teacher[]> {
+  getTeachers(): Observable<Teacher[]> {
     return new Observable((observer) => {
       setTimeout(() => {
         observer.next(this.teachers);
+        observer.complete();
+      }, 1500);
+    });
+  }
+
+  getTeacher(id: number): Observable<Teacher> {
+    return new Observable((observer) => {
+      setTimeout(() => {
+        const teacher = this.teachers.find((s) => s.id === id);
+        observer.next(teacher);
         observer.complete();
       }, 1500);
     });

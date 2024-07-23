@@ -61,7 +61,7 @@ export class FormDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.teacherService.getTeacher().subscribe((teachers) => {
+    this.teacherService.getTeachers().subscribe((teachers) => {
       this.teachers = teachers;
       this.isLoading = false;
     });

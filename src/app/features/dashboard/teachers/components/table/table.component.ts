@@ -65,7 +65,7 @@ export class TableComponent implements OnInit {
   ) {}
 
   loadStudents() {
-    this.teacherService.getTeacher().subscribe((teachers) => {
+    this.teacherService.getTeachers().subscribe((teachers) => {
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

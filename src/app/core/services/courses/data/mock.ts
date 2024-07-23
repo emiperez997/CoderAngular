@@ -5,7 +5,7 @@ export const mockCourses: Course[] = [
     id: 1,
     title: 'Angular',
     description:
-      'Angular is a TypeScript-based open-source front-end web framework led by the Angular Team at Google and by a community of individuals and corporations. Angular is a complete rewrite from the same team that built AngularJS.',
+      'En este curso aprenderás a construir aplicaciones web con Angular. Angular se destaca por su enfoque en la modularización, lo que permite desarrollar aplicaciones de alto nivel de manera más fácil y rápida. Además, Angular ofrece una gran cantidad de herramientas y bibliotecas que te ayudarán a crear aplicaciones robustas y escalables.',
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 1,
@@ -17,7 +17,7 @@ export const mockCourses: Course[] = [
     id: 2,
     title: 'React',
     description:
-      'React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications.',
+      'React es una biblioteca de JavaScript para construir interfaces de usuario. Es mantenida por Facebook y una comunidad de desarrolladores individuales y empresas. React se puede utilizar como base en el desarrollo de aplicaciones de página única o móviles.',
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 2,
@@ -29,7 +29,7 @@ export const mockCourses: Course[] = [
     id: 3,
     title: 'Vue',
     description:
-      'Vue (pronounced /vjuː/, like view) is a progressive JavaScript framework for building user interfaces. It is open source and is maintained by Evan You.',
+      'Vue (pronunciado /vjuː/, como vista) es un marco de trabajo de JavaScript progresivo para construir interfaces de usuario. Es de código abierto y es mantenido por Evan You.',
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 3,
@@ -41,7 +41,7 @@ export const mockCourses: Course[] = [
     id: 4,
     title: 'NestJS',
     description:
-      'Nest is a progressive Node.js framework for building efficient, scalable server-side applications. It provides a complete solution for building web, mobile, and even IoT applications.',
+      'Nest es un marco de trabajo de Node.js progresivo para construir aplicaciones de servidor eficientes y escalables. Proporciona una solución completa para la construcción de aplicaciones web, móviles y incluso aplicaciones IoT.',
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 4,
@@ -53,7 +53,7 @@ export const mockCourses: Course[] = [
     id: 6,
     title: 'NodeJS',
     description:
-      "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.",
+      "Node.js es un entorno de ejecución de JavaScript construido en Chrome's V8 motor de JavaScript. Node.js utiliza un modelo de I/O asíncrono, no bloqueante que hace que sea ligero y eficiente, perfecto para aplicaciones de tiempo real intensivas que se ejecutan en dispositivos distribuidos.",
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 5,

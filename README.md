@@ -20,12 +20,12 @@
 
 ## Aspectos a incluir
 
-- [ ] Creación de servicios
+- [ x ] Creación de servicios
 
-  - [ ] Que devuelvan un observable con datos mockeados
-  - [ ] ABM de las entidades
+  - [ x ] Que devuelvan un observable con datos mockeados
+  - [ x ] ABM de las entidades
 
-- [ ] Uso de routing
-  - [ ] Utilizar la navegación del menú lateral
+- [ x ] Uso de routing
+  - [ x ] Utilizar la navegación del menú lateral
 - [ x ] Uso de Angular Material
-- [ ] Modularizar la aplicación en `app`, `core`, `sharedd` y `features`
+- [ x ] Modularizar la aplicación en `app`, `core`, `sharedd` y `features`

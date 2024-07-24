@@ -17,3 +17,11 @@ export enum InscriptionStatus {
   CONFIRMED = 'CONFIRMED',
   REJECTED = 'REJECTED',
 }
+
+export const inscriptionColumns: string[] = [
+  'id',
+  'course',
+  'status',
+  'createdAt',
+  'updatedAt',
+];

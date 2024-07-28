@@ -41,6 +41,7 @@ export class FormDialogComponent implements OnInit {
   courses: Course[] = [];
   students: Student[] = [];
   isEditing: boolean = false;
+  isLoading: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -59,18 +60,45 @@ export class FormDialogComponent implements OnInit {
     if (this.editingInscription) {
       this.isEditing = true;
       this.createForm.patchValue(this.editingInscription);
+      console.log(this.editingInscription);
     }
   }
 
   ngOnInit() {
     this.courseService.getCourses().subscribe((courses) => {
-      this.createForm.get('courseId')?.setValue(courses[0].id);
-      this.courses = courses;
+      if (!this.editingInscription) {
+        this.createForm.get('courseId')?.setValue(courses[0].id);
+        this.courses = courses;
+      } else {
+        const course = courses.find(
+          (c) => c.id === this.editingInscription?.courseId,
+        );
+
+        if (course) {
+          this.createForm.get('courseId')?.setValue(course.id);
+          this.courses = [course];
+        }
+      }
+
+      this.isLoading = false;
     });
 
     this.studentService.getStudents().subscribe((students) => {
-      this.createForm.get('studentId')?.setValue(students[0].id);
-      this.students = students;
+      if (!this.editingInscription) {
+        this.createForm.get('studentId')?.setValue(students[0].id);
+        this.students = students;
+      } else {
+        const student = students.find(
+          (s) => s.id === this.editingInscription?.studentId,
+        );
+
+        if (student) {
+          this.createForm.get('studentId')?.setValue(student.id);
+          this.students = [student];
+        }
+      }
+
+      this.isLoading = false;
     });
   }
 

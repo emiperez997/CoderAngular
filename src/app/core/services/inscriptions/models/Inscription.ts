@@ -24,4 +24,5 @@ export const inscriptionColumns: string[] = [
   'status',
   'createdAt',
   'updatedAt',
+  'actions',
 ];

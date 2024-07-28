@@ -107,53 +107,53 @@ export class TableComponent implements OnInit {
         },
       });
   }
-  //
-  // editStudent(student: Student) {
-  //   this.dialog
-  //     .open(FormDialogComponent, {
-  //       data: student,
-  //     })
-  //     .afterClosed()
-  //     .subscribe({
-  //       next: (student) => {
-  //         if (!!student) {
-  //           this.isLoading = true;
-  //           this.studentService.updateStudent(student).subscribe({
-  //             next: (students) => {
-  //               this.dataSource.data = [...students];
-  //             },
-  //             complete: () => {
-  //               this.isLoading = false;
-  //             },
-  //           });
-  //         }
-  //       },
-  //     });
-  // }
-  //
-  // deleteStudent(id: number) {
-  //   this.dialog
-  //     .open(ConfirmDialogComponent, {
-  //       data: {
-  //         title: 'Confirmar Eliminación',
-  //         message: '¿Está seguro de eliminar este alumno?',
-  //       },
-  //     })
-  //     .afterClosed()
-  //     .subscribe({
-  //       next: (result) => {
-  //         if (result) {
-  //           this.isLoading = true;
-  //           this.studentService.deleteStudent(id).subscribe({
-  //             next: (students) => {
-  //               this.dataSource.data = [...students];
-  //             },
-  //             complete: () => {
-  //               this.isLoading = false;
-  //             },
-  //           });
-  //         }
-  //       },
-  //     });
-  // }
+
+  editInscription(inscription: Inscription) {
+    this.dialog
+      .open(FormDialogComponent, {
+        data: inscription,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (inscription) => {
+          if (!!inscription) {
+            this.isLoading = true;
+            this.inscriptionsService.updateInscription(inscription).subscribe({
+              next: (inscriptions) => {
+                this.loadInscriptions();
+              },
+              complete: () => {
+                this.isLoading = false;
+              },
+            });
+          }
+        },
+      });
+  }
+
+  deleteInscription(id: number) {
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: {
+          title: 'Confirmar Eliminación',
+          message: '¿Está seguro de eliminar este alumno?',
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.isLoading = true;
+            this.inscriptionsService.deleteInscription(id).subscribe({
+              next: (inscriptions) => {
+                this.loadInscriptions();
+              },
+              complete: () => {
+                this.isLoading = false;
+              },
+            });
+          }
+        },
+      });
+  }
 }

@@ -75,10 +75,20 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
-        <button mat-icon-button color="primary" [disabled]="isLoading">
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="isLoading"
+          (click)="editInscription(row)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="primary" [disabled]="isLoading">
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="isLoading"
+          (click)="deleteInscription(row.id)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>

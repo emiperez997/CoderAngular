@@ -10,6 +10,7 @@ import { mockInscriptions } from './data/mock';
 })
 export class InscriptionsService {
   private inscriptions: Inscription[];
+  private timer: number = 1000;
 
   constructor(
     private courseService: CoursesService,
@@ -23,7 +24,7 @@ export class InscriptionsService {
       setTimeout(() => {
         subscriber.next(this.inscriptions);
         subscriber.complete();
-      }, 1000);
+      }, this.timer);
     });
   }
 
@@ -42,7 +43,7 @@ export class InscriptionsService {
         });
         subscriber.next(this.inscriptions);
         subscriber.complete();
-      }, 1000);
+      }, this.timer);
     });
   }
 
@@ -62,7 +63,7 @@ export class InscriptionsService {
         setTimeout(() => {
           observer.next(this.inscriptions);
           observer.complete();
-        }, 1000);
+        }, this.timer);
       });
     }
 
@@ -70,7 +71,7 @@ export class InscriptionsService {
       setTimeout(() => {
         subscriber.next(this.inscriptions);
         subscriber.complete();
-      }, 1000);
+      }, this.timer);
     });
   }
 
@@ -82,7 +83,7 @@ export class InscriptionsService {
       setTimeout(() => {
         subscriber.next(this.inscriptions);
         subscriber.complete();
-      }, 1000);
+      }, this.timer);
     });
   }
 }

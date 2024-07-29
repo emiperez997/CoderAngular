@@ -1,3 +1,23 @@
 .w-full {
   width: 100%;
 }
+
+.skeleton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+mat-spinner {
+  width: 100%;
+}

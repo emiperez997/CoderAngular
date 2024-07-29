@@ -8,6 +8,7 @@ import { mockTeachers } from './data/mock';
 })
 export class TeachersService {
   private teachers: Teacher[] = [];
+  private timer: number = 1000;
 
   constructor() {
     this.teachers = mockTeachers;
@@ -18,7 +19,7 @@ export class TeachersService {
       setTimeout(() => {
         observer.next(this.teachers);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -28,7 +29,7 @@ export class TeachersService {
         const teacher = this.teachers.find((s) => s.id === id);
         observer.next(teacher);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -45,7 +46,7 @@ export class TeachersService {
       setTimeout(() => {
         observer.next(this.teachers);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -63,7 +64,7 @@ export class TeachersService {
         setTimeout(() => {
           observer.next(this.teachers);
           observer.complete();
-        }, 1500);
+        }, this.timer);
       });
     }
 
@@ -71,7 +72,7 @@ export class TeachersService {
       setTimeout(() => {
         observer.next(this.teachers);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -85,7 +86,7 @@ export class TeachersService {
         setTimeout(() => {
           observer.next(this.teachers);
           observer.complete();
-        }, 1500);
+        }, this.timer);
       });
     }
 
@@ -93,7 +94,7 @@ export class TeachersService {
       setTimeout(() => {
         observer.next(this.teachers);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 }

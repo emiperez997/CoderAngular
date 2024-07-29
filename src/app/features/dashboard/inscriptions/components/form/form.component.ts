@@ -20,6 +20,7 @@ import {
 } from '@angular/material/dialog';
 import { Inscription } from '../../../../../core/services/inscriptions/models/Inscription';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-inscriptions-form',
@@ -31,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatDialogModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',

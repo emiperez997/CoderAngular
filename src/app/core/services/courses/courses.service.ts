@@ -9,6 +9,7 @@ import { TeachersService } from '../teachers/teacher.service';
 })
 export class CoursesService {
   private courses: Course[] = [];
+  private timer: number = 1000;
 
   constructor(private teachersService: TeachersService) {
     this.courses = mockCourses;
@@ -19,7 +20,7 @@ export class CoursesService {
       setTimeout(() => {
         observer.next(this.courses);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -43,7 +44,7 @@ export class CoursesService {
           });
         observer.next(course);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -58,7 +59,7 @@ export class CoursesService {
       setTimeout(() => {
         observer.next(this.courses);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -76,7 +77,7 @@ export class CoursesService {
         setTimeout(() => {
           observer.next(this.courses);
           observer.complete();
-        }, 1500);
+        }, this.timer);
       });
     }
 
@@ -84,7 +85,7 @@ export class CoursesService {
       setTimeout(() => {
         observer.next(this.courses);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -98,7 +99,7 @@ export class CoursesService {
         setTimeout(() => {
           observer.next(this.courses);
           observer.complete();
-        }, 1500);
+        }, this.timer);
       });
     }
 
@@ -106,7 +107,7 @@ export class CoursesService {
       setTimeout(() => {
         observer.next(this.courses);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 }

@@ -8,6 +8,7 @@ import { Student } from './models/Student';
 })
 export class StudentsService {
   private students: Student[] = [];
+  private timer: number = 1000;
 
   constructor() {
     this.students = mockStudents;
@@ -18,7 +19,7 @@ export class StudentsService {
       setTimeout(() => {
         observer.next(this.students);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -37,7 +38,7 @@ export class StudentsService {
       setTimeout(() => {
         observer.next(this.students);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -55,7 +56,7 @@ export class StudentsService {
         setTimeout(() => {
           observer.next(this.students);
           observer.complete();
-        }, 1500);
+        }, this.timer);
       });
     }
 
@@ -63,7 +64,7 @@ export class StudentsService {
       setTimeout(() => {
         observer.next(this.students);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 
@@ -77,7 +78,7 @@ export class StudentsService {
         setTimeout(() => {
           observer.next(this.students);
           observer.complete();
-        }, 1500);
+        }, this.timer);
       });
     }
 
@@ -85,7 +86,7 @@ export class StudentsService {
       setTimeout(() => {
         observer.next(this.students);
         observer.complete();
-      }, 1500);
+      }, this.timer);
     });
   }
 }

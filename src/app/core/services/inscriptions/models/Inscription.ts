@@ -14,7 +14,7 @@ export interface Inscription {
 
 export enum InscriptionStatus {
   PENDING = 'PENDING',
-  CONFIRMED = 'CONFIRMED',
+  ACCEPTED = 'ACCEPTED',
   REJECTED = 'REJECTED',
 }
 

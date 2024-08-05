@@ -10,7 +10,7 @@ export interface Course {
   teacher?: Teacher;
   teacherId: number;
   students?: Student[];
-  isActive: boolean;
+  status: CourseStatus;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,8 +20,14 @@ export const courseColumns: string[] = [
   'title',
   'beginDate',
   'endDate',
-  'isActive',
+  'status',
   'createdAt',
   'updatedAt',
   'actions',
 ];
+
+export enum CourseStatus {
+  SCHEDULED = 'SCHEDULED',
+  STARTED = 'STARTED',
+  FINISHED = 'FINISHED',
+}

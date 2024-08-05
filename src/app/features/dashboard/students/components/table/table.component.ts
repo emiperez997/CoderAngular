@@ -96,7 +96,7 @@ export class TableComponent implements OnInit {
             this.isLoading = true;
             this.studentService.addStudent(student).subscribe({
               next: (students) => {
-                this.dataSource.data = [...students];
+                this.loadStudents();
               },
               complete: () => {
                 this.isLoading = false;
@@ -119,7 +119,7 @@ export class TableComponent implements OnInit {
             this.isLoading = true;
             this.studentService.updateStudent(student).subscribe({
               next: (students) => {
-                this.dataSource.data = [...students];
+                this.loadStudents();
               },
               complete: () => {
                 this.isLoading = false;
@@ -145,7 +145,7 @@ export class TableComponent implements OnInit {
             this.isLoading = true;
             this.studentService.deleteStudent(id).subscribe({
               next: (students) => {
-                this.dataSource.data = [...students];
+                this.loadStudents();
               },
               complete: () => {
                 this.isLoading = false;

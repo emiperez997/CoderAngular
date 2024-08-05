@@ -7,5 +7,5 @@ export const formGroup = {
   beginDate: ['', [Validators.required]],
   endDate: ['', [Validators.required]],
   teacherId: ['', [Validators.required]],
-  isActive: ['ACTIVE', [Validators.required]],
+  status: ['ACTIVE', [Validators.required]],
 };

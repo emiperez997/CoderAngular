@@ -64,7 +64,7 @@ export class TableComponent implements OnInit {
     private dialog: MatDialog,
   ) {}
 
-  loadStudents() {
+  loadTeachers() {
     this.teacherService.getTeachers().subscribe((teachers) => {
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.paginator = this.paginator;
@@ -75,7 +75,7 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadStudents();
+    this.loadTeachers();
   }
 
   applyFilter(event: Event) {
@@ -97,7 +97,7 @@ export class TableComponent implements OnInit {
             this.isLoading = true;
             this.teacherService.addTeacher(teacher).subscribe({
               next: (teachers) => {
-                this.dataSource.data = [...teachers];
+                this.loadTeachers();
               },
               complete: () => {
                 this.isLoading = false;
@@ -120,7 +120,7 @@ export class TableComponent implements OnInit {
             this.isLoading = true;
             this.teacherService.updateTeacher(teacher).subscribe({
               next: (teachers) => {
-                this.dataSource.data = [...teachers];
+                this.loadTeachers();
               },
               complete: () => {
                 this.isLoading = false;
@@ -146,7 +146,7 @@ export class TableComponent implements OnInit {
             this.isLoading = true;
             this.teacherService.deleteTeacher(id).subscribe({
               next: (teachers) => {
-                this.dataSource.data = [...teachers];
+                this.loadTeachers();
               },
               complete: () => {
                 this.isLoading = false;

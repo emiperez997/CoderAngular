@@ -1,9 +1,18 @@
-<h2 mat-dialog-title>{{ isEditing ? "Editar Alumno" : "Crear Alumno" }}</h2>
+<h2 mat-dialog-title>
+  {{ isEditing ? "Editar Inscripción" : "Crear Inscripción" }}
+</h2>
 
 <mat-dialog-content ngClass="{ skeleton: isLoading }">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 
   <form [formGroup]="createForm" *ngIf="!isLoading">
+    @if (isEditing) {
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>ID</mat-label>
+        <input matInput disabled value="{{ editingInscription?.id }}" />
+      </mat-form-field>
+    }
+
     <mat-form-field class="w-full">
       <mat-label>Curso</mat-label>
       <mat-select name="course" formControlName="courseId">
@@ -26,7 +35,7 @@
       <mat-label>Estado</mat-label>
       <mat-select name="status" formControlName="status">
         <mat-option value="PENDING">Pendiente</mat-option>
-        <mat-option value="CONFIRMED">Confirmado</mat-option>
+        <mat-option value="ACCEPTED">Aceptado</mat-option>
         <mat-option value="REJECTED">Rechazado</mat-option>
       </mat-select>
     </mat-form-field>

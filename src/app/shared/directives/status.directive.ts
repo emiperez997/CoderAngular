@@ -18,11 +18,18 @@ export class StatusDirective implements OnChanges {
   changeBackground() {
     switch (this.appStatus) {
       case 'ACTIVE':
+      case 'ACCEPTED':
         this.elementRef.nativeElement.style.background = 'green';
         break;
       case 'INACTIVE':
+      case 'REJECTED':
         this.elementRef.nativeElement.style.background = 'red';
         break;
+      case 'PENDING':
+      case 'SCHEDULED':
+        this.elementRef.nativeElement.style.background = 'orange';
+        break;
+
       default:
         this.elementRef.nativeElement.style.background = 'black';
         break;

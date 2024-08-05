@@ -13,7 +13,7 @@ export const mockInscriptions: Inscription[] = [
     id: 2,
     courseId: 2,
     studentId: 2,
-    status: InscriptionStatus.CONFIRMED,
+    status: InscriptionStatus.ACCEPTED,
     createdAt: new Date(),
     updatedAt: new Date(),
   },

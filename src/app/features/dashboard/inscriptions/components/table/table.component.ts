@@ -49,6 +49,7 @@ import { FormDialogComponent } from '../form/form.component';
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
+  @Input() courseId?: number;
   isLoading = true;
   firstLoading = true;
 
@@ -66,6 +67,12 @@ export class TableComponent implements OnInit {
 
   loadInscriptions() {
     this.inscriptionsService.getInscriptions().subscribe((inscriptions) => {
+      if (this.courseId) {
+        inscriptions = inscriptions.filter(
+          (inscription) => inscription.courseId === this.courseId,
+        );
+      }
+
       this.dataSource = new MatTableDataSource(inscriptions);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -1,47 +1,27 @@
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { HomeComponent } from './features/dashboard/home/home.component';
-import { CoursesComponent } from './features/dashboard/courses/courses.component';
-import { StudentsComponent } from './features/dashboard/students/students.component';
-import { InscriptionsComponent } from './features/dashboard/inscriptions/inscriptions.component';
-import { TeachersComponent } from './features/dashboard/teachers/teachers.component';
-import { DetailComponent as CourseDetail } from './features/dashboard/courses/pages/details/detail.component';
+
+import { LoginComponent } from './features/auth/login/login.component';
+import { authGuard } from './core/guards/auth/auth.guard';
+import { loginGuard } from './core/guards/login/login.guard';
 
 export const routes: Routes = [
   {
+    path: 'auth',
+    component: LoginComponent,
+    canActivate: [loginGuard],
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
-    children: [
-      {
-        path: 'home',
-        component: HomeComponent,
-      },
-      {
-        path: 'courses',
-        component: CoursesComponent,
-      },
-      {
-        path: 'courses/:id',
-        component: CourseDetail,
-      },
-      {
-        path: 'students',
-        component: StudentsComponent,
-      },
-      {
-        path: 'inscriptions',
-        component: InscriptionsComponent,
-      },
-      {
-        path: 'teachers',
-        component: TeachersComponent,
-      },
-      {
-        path: '**',
-        redirectTo: 'home',
-      },
-    ],
+    // canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule,
+      ),
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
   },
   {
     path: '**',

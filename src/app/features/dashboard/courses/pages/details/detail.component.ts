@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { StatusPipe } from '../../../../../shared/pipes/status.pipe';
+import { StatusDirective } from '../../../../../shared/directives/status.directive';
+import { InscriptionsComponent } from '../../../inscriptions/inscriptions.component';
+import { TableComponent as InscriptionsTableComponent } from '../../../inscriptions/components/table/table.component';
 
 @Component({
   selector: 'app-detail',
@@ -18,6 +22,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule,
     RouterLink,
+    StatusPipe,
+    StatusDirective,
+    InscriptionsTableComponent,
   ],
 })
 export class DetailComponent {
@@ -31,8 +38,6 @@ export class DetailComponent {
     const id = this.activatedRoute.snapshot.params['id'];
 
     this.courseService.getCourse(Number(id)).subscribe((course) => {
-      console.log(course);
-
       this.course = course;
       this.loading = false;
     });

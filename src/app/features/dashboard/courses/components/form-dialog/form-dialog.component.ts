@@ -68,10 +68,6 @@ export class FormDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.createForm);
-
-    console.log(this.createForm.errors);
-
     if (!this.createForm.invalid) {
       this.matDialogRef.close(this.createForm.value);
     }

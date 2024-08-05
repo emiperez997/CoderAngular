@@ -6,4 +6,8 @@
       <span matListItemLine>{{ item.name }}</span>
     </a>
   }
+  <a mat-list-item (click)="logout()">
+    <mat-icon matListItemIcon>logout</mat-icon>
+    <span matListItemLine>Logout</span>
+  </a>
 </mat-nav-list>

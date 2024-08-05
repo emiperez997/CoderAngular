@@ -64,9 +64,10 @@
 
     <mat-form-field class="w-full">
       <mat-label>Estado</mat-label>
-      <mat-select name="status" formControlName="isActive">
-        <mat-option value="ACTIVE">Activo</mat-option>
-        <mat-option value="INACTIVE">Inactivo</mat-option>
+      <mat-select name="status" formControlName="status">
+        <mat-option value="SCHEDULED">Programado</mat-option>
+        <mat-option value="STARTED">Iniciado</mat-option>
+        <mat-option value="FINISHED">Terminado</mat-option>
       </mat-select>
     </mat-form-field>
   </form>

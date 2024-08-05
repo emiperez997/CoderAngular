@@ -21,6 +21,8 @@ import {
 import { Inscription } from '../../../../../core/services/inscriptions/models/Inscription';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { formGroup } from './validation';
 
 @Component({
   selector: 'app-inscriptions-form',
@@ -33,6 +35,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatInputModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
@@ -48,21 +51,15 @@ export class FormDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<FormDialogComponent>,
-    private inscriptionsService: InscriptionsService,
     private studentService: StudentsService,
     private courseService: CoursesService,
     @Inject(MAT_DIALOG_DATA) public editingInscription?: Inscription,
   ) {
-    this.createForm = this.fb.group({
-      courseId: ['', Validators.required],
-      studentId: ['', Validators.required],
-      status: ['PENDING', Validators.required],
-    });
+    this.createForm = this.fb.group(formGroup);
 
     if (this.editingInscription) {
       this.isEditing = true;
       this.createForm.patchValue(this.editingInscription);
-      console.log(this.editingInscription);
     }
   }
 
@@ -120,10 +117,6 @@ export class FormDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.createForm);
-
-    console.log(this.createForm.errors);
-
     if (!this.createForm.invalid) {
       this.matDialogRef.close(this.createForm.value);
     }

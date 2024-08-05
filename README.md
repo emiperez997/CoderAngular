@@ -29,3 +29,14 @@
   - [ x ] Utilizar la navegación del menú lateral
 - [ x ] Uso de Angular Material
 - [ x ] Modularizar la aplicación en `app`, `core`, `sharedd` y `features`
+
+# Tercera Entrega
+
+## Aspectos a incluir
+
+- [ x ] Lazy loading y rutas child
+- [ ] Guards y Autenticación de usuarios
+- [ ] Peticiones a una API
+- [ ] Testing unitarios
+  - [ ] Al menos un archiv ode test que testee un servicio
+  - [ ] Al menos un test que testee un componente

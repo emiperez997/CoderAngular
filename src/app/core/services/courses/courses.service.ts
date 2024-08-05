@@ -3,6 +3,8 @@ import { Course } from './models/Course';
 import { mockCourses } from './data/mock';
 import { Observable } from 'rxjs';
 import { TeachersService } from '../teachers/teacher.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,103 +13,33 @@ export class CoursesService {
   private courses: Course[] = [];
   private timer: number = 1000;
 
-  constructor(private teachersService: TeachersService) {
-    this.courses = mockCourses;
-  }
+  constructor(
+    private http: HttpClient,
+    private teachersService: TeachersService,
+  ) {}
 
   getCourses(): Observable<Course[]> {
-    return new Observable((observer) => {
-      setTimeout(() => {
-        observer.next(this.courses);
-        observer.complete();
-      }, this.timer);
-    });
+    return this.http.get<Course[]>(environment.apiUrl + '/courses');
   }
 
   getCourse(id: number): Observable<Course | undefined> {
-    return new Observable((observer) => {
-      setTimeout(() => {
-        const course = this.courses.find((c) => c.id === id);
-
-        if (!course) {
-          observer.next(undefined);
-          observer.complete();
-          return;
-        }
-
-        this.teachersService
-          .getTeacher(course?.teacherId)
-          .subscribe((teacher) => {
-            course.teacher = teacher;
-            observer.next(course);
-            observer.complete();
-          });
-        observer.next(course);
-        observer.complete();
-      }, this.timer);
-    });
+    return this.http.get<Course>(environment.apiUrl + '/courses/' + id);
   }
 
-  addCourse(course: Course): Observable<Course[]> {
-    course.id = this.courses[this.courses.length - 1].id + 1;
-    course.createdAt = new Date();
-    course.updatedAt = new Date();
+  addCourse(course: Course): Observable<Course> {
+    console.log(course);
 
-    this.courses.push(course);
-
-    return new Observable((observer) => {
-      setTimeout(() => {
-        observer.next(this.courses);
-        observer.complete();
-      }, this.timer);
-    });
+    return this.http.post<Course>(environment.apiUrl + '/courses', course);
   }
 
-  updateCourse(course: Course): Observable<Course[]> {
-    const index = this.courses.findIndex((c) => c.id === course.id);
-
-    if (index !== -1) {
-      this.courses[index] = {
-        ...this.courses[index],
-        ...course,
-        updatedAt: new Date(),
-      };
-
-      return new Observable((observer) => {
-        setTimeout(() => {
-          observer.next(this.courses);
-          observer.complete();
-        }, this.timer);
-      });
-    }
-
-    return new Observable((observer) => {
-      setTimeout(() => {
-        observer.next(this.courses);
-        observer.complete();
-      }, this.timer);
-    });
+  updateCourse(course: Course): Observable<Course> {
+    return this.http.put<Course>(
+      environment.apiUrl + '/courses/' + course.id,
+      course,
+    );
   }
 
-  deleteCourse(id: number): Observable<Course[]> {
-    const index = this.courses.findIndex((c) => c.id === id);
-
-    if (index !== -1) {
-      this.courses.splice(index, 1);
-
-      return new Observable((observer) => {
-        setTimeout(() => {
-          observer.next(this.courses);
-          observer.complete();
-        }, this.timer);
-      });
-    }
-
-    return new Observable((observer) => {
-      setTimeout(() => {
-        observer.next(this.courses);
-        observer.complete();
-      }, this.timer);
-    });
+  deleteCourse(id: number): Observable<Course> {
+    return this.http.delete<Course>(environment.apiUrl + '/courses/' + id);
   }
 }

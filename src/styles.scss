@@ -1,5 +1,8 @@
 @use "@angular/material" as mat;
 
+$dark: #1b1b1f;
+$gray: #f0f0f0;
+
 $light-theme: mat.define-theme(
   (
     color: (
@@ -32,6 +35,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;

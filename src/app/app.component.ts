@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 
 import { DashboardModule } from './features/dashboard/dashboard.module';
 import { ThemeService } from './core/services/theme/theme.service';
+import { AngularToastifyModule } from 'angular-toastify';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DashboardModule],
+  imports: [RouterOutlet, DashboardModule, AngularToastifyModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [ThemeService],

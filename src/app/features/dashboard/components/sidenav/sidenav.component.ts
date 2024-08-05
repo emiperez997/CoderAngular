@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterLink } from '@angular/router';
 import { ListItem } from './models/ListItem';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -17,6 +18,7 @@ import { ListItem } from './models/ListItem';
     MatDividerModule,
     RouterLink,
   ],
+  providers: [AuthService],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
@@ -48,4 +50,10 @@ export class SidenavComponent {
       url: 'teachers',
     },
   ];
+
+  constructor(private authService: AuthService) {}
+
+  logout() {
+    this.authService.logout();
+  }
 }

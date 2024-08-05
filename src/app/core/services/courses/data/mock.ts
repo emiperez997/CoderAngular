@@ -1,4 +1,4 @@
-import { Course } from '../models/Course';
+import { Course, CourseStatus } from '../models/Course';
 
 export const mockCourses: Course[] = [
   {
@@ -9,7 +9,7 @@ export const mockCourses: Course[] = [
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 1,
-    isActive: true,
+    status: CourseStatus.SCHEDULED,
     createdAt: new Date('2022-01-01'),
     updatedAt: new Date('2022-01-01'),
   },
@@ -21,7 +21,7 @@ export const mockCourses: Course[] = [
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 2,
-    isActive: false,
+    status: CourseStatus.STARTED,
     createdAt: new Date('2022-01-01'),
     updatedAt: new Date('2022-01-01'),
   },
@@ -33,7 +33,7 @@ export const mockCourses: Course[] = [
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 3,
-    isActive: true,
+    status: CourseStatus.FINISHED,
     createdAt: new Date('2022-01-01'),
     updatedAt: new Date('2022-01-01'),
   },
@@ -45,7 +45,7 @@ export const mockCourses: Course[] = [
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 4,
-    isActive: false,
+    status: CourseStatus.SCHEDULED,
     createdAt: new Date('2022-01-01'),
     updatedAt: new Date('2022-01-01'),
   },
@@ -57,7 +57,7 @@ export const mockCourses: Course[] = [
     beginDate: new Date('2022-01-01'),
     endDate: new Date('2022-12-31'),
     teacherId: 5,
-    isActive: true,
+    status: CourseStatus.STARTED,
     createdAt: new Date('2022-01-01'),
     updatedAt: new Date('2022-01-01'),
   },

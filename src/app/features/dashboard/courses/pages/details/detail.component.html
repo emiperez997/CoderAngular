@@ -38,10 +38,14 @@
 
     <small [className]="'status'">
       Estado:
-      <mat-icon
-        [ngClass]="{ active: course?.isActive, inactive: !course?.isActive }"
-        >{{ course?.isActive ? "check" : "close" }}</mat-icon
+
+      <span
+        class="badge"
+        appStatus="{{ course?.status }}"
+        style="padding: 5px 10px"
       >
+        {{ course?.status | status }}
+      </span>
     </small>
 
     <small *ngIf="!course?.teacher">
@@ -53,4 +57,6 @@
       {{ course?.teacher?.lastName }}
     </small>
   </div>
+
+  <app-inscriptions-table [courseId]="course?.id"></app-inscriptions-table>
 </div>

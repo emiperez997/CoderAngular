@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { Login } from './models/Login';
 import { Router } from '@angular/router';
-import { ToastService } from 'angular-toastify';
 import { of } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { UserToken } from './models/UserToken';
@@ -15,7 +14,6 @@ import { UserToken } from './models/UserToken';
 export class AuthService {
   constructor(
     private http: HttpClient,
-    private toast: ToastService,
     private router: Router,
   ) {}
 

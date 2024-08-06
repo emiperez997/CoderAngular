@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard.component';
 import { StudentsComponent } from './students/students.component';
 import { HomeComponent } from './home/home.component';
 import { TeachersComponent } from './teachers/teachers.component';
+import { AngularToastifyModule } from 'angular-toastify';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -34,6 +35,8 @@ import { TeachersComponent } from './teachers/teachers.component';
 
     TitleDirective,
     RouterOutlet,
+
+    AngularToastifyModule,
   ],
 })
 export class DashboardModule {}

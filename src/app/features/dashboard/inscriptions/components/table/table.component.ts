@@ -23,6 +23,8 @@ import {
   inscriptionColumns,
 } from '../../../../../core/services/inscriptions/models/Inscription';
 import { FormDialogComponent } from '../form/form.component';
+import { ToastService } from 'angular-toastify';
+import { getErrorMessage } from '../../../../../shared/utils/errorMessages';
 
 @Component({
   selector: 'app-inscriptions-table',
@@ -63,6 +65,7 @@ export class TableComponent implements OnInit {
   constructor(
     private inscriptionsService: InscriptionsService,
     private dialog: MatDialog,
+    private toastService: ToastService,
   ) {}
 
   loadInscriptions() {
@@ -106,11 +109,20 @@ export class TableComponent implements OnInit {
               next: (inscriptions) => {
                 this.loadInscriptions();
               },
+              error: (error) => {
+                this.toastService.error(getErrorMessage(error.error.message));
+                this.isLoading = false;
+              },
               complete: () => {
                 this.isLoading = false;
               },
             });
           }
+        },
+        error: (error) => {
+          console.log(error);
+
+          this.toastService.error(error.error.message);
         },
       });
   }

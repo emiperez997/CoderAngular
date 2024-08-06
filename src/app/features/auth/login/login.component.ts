@@ -60,9 +60,10 @@ export class LoginComponent {
       return this.toastService.error('Formulario no válido');
     }
 
+    this.loginForm.disable();
+
     this.authService.login(this.loginForm.value).subscribe({
       next: (response: any) => {
-        this.loginForm.disable();
         this.toastService.success('Sesión iniciada');
         this.authService.setToken(response.token);
 
@@ -74,6 +75,7 @@ export class LoginComponent {
       },
       error: (error) => {
         this.toastService.error(error.error.message);
+        this.loginForm.enable();
       },
     });
   }

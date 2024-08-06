@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: '',
+  apiUrl: 'https://backend-platform-learning.onrender.com/api/',
 };

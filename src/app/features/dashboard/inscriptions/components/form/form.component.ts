@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { formGroup } from './validation';
+import { ToastService } from 'angular-toastify';
 
 @Component({
   selector: 'app-inscriptions-form',
@@ -53,6 +54,7 @@ export class FormDialogComponent implements OnInit {
     private matDialogRef: MatDialogRef<FormDialogComponent>,
     private studentService: StudentsService,
     private courseService: CoursesService,
+
     @Inject(MAT_DIALOG_DATA) public editingInscription?: Inscription,
   ) {
     this.createForm = this.fb.group(formGroup);

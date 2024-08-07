@@ -35,8 +35,8 @@
 ## Aspectos a incluir
 
 - [ x ] Lazy loading y rutas child
-- [ ] Guards y Autenticación de usuarios
-- [ ] Peticiones a una API
-- [ ] Testing unitarios
-  - [ ] Al menos un archiv ode test que testee un servicio
-  - [ ] Al menos un test que testee un componente
+- [ x ] Guards y Autenticación de usuarios
+- [ x ] Peticiones a una API
+- [ x ] Testing unitarios
+  - [ x ] Al menos un archivo de test que testee un servicio
+  - [ x ] Al menos un test que testee un componente

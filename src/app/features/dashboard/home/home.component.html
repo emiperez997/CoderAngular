@@ -1,1 +1,12 @@
-<p>home works!</p>
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ user?.email }}</mat-card-title>
+    <mat-card-subtitle>{{ user?.role }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions align="start">
+    <a mat-button [routerLink]="['/dashboard/students']">Alumnos</a>
+    <a mat-button [routerLink]="['/dashboard/teachers']">Profesores</a>
+    <a mat-button [routerLink]="['/dashboard/courses']">Cursos</a>
+    <a mat-button [routerLink]="['/dashboard/inscriptions']">Inscripciones</a>
+  </mat-card-actions>
+</mat-card>

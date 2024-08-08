@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { UserToken } from './models/UserToken';
+import { unsetAuthUser } from '../../store/auth/auth.actions';
+import { RootState } from '../../store';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +18,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private store: Store<RootState>,
   ) {}
 
   login(login: Login) {
@@ -32,11 +36,18 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
 
+    this.store.dispatch(unsetAuthUser());
+
     this.router.navigate(['auth']);
   }
 
   isLoggedIn() {
     return !!this.getToken();
+  }
+
+  getUserToken(token: string) {
+    const decoded: UserToken = jwtDecode(token);
+    return decoded;
   }
 
   verifyToken() {

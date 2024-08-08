@@ -15,6 +15,7 @@ import { StudentsComponent } from './students/students.component';
 import { HomeComponent } from './home/home.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { AngularToastifyModule } from 'angular-toastify';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -38,5 +39,6 @@ import { AngularToastifyModule } from 'angular-toastify';
 
     AngularToastifyModule,
   ],
+  providers: [AuthService],
 })
 export class DashboardModule {}

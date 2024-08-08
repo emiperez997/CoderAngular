@@ -17,6 +17,9 @@ import { ThemeService } from '../../../core/services/theme/theme.service';
 import { AngularToastifyModule, ToastService } from 'angular-toastify';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
+import { RootState } from '../../../core/store';
+import { Store } from '@ngrx/store';
+import { setAuthUser } from '../../../core/store/auth/auth.actions';
 
 @Component({
   standalone: true,
@@ -38,6 +41,7 @@ import { HttpResponse } from '@angular/common/http';
 export class LoginComponent {
   loginForm: FormGroup;
   theme: string | null;
+  isLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -46,6 +50,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private location: Location,
+    private store: Store<RootState>,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -60,12 +65,19 @@ export class LoginComponent {
       return this.toastService.error('Formulario no válido');
     }
 
+    this.isLoading = true;
+
     this.loginForm.disable();
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (response: any) => {
         this.toastService.success('Sesión iniciada');
         this.authService.setToken(response.token);
+        this.store.dispatch(
+          setAuthUser({
+            payload: this.authService.getUserToken(response.token),
+          }),
+        );
 
         setTimeout(() => {
           this.router.navigate(['/dashboard']).then(() => {
@@ -76,6 +88,7 @@ export class LoginComponent {
       error: (error) => {
         this.toastService.error(error.error.message);
         this.loginForm.enable();
+        this.isLoading = false;
       },
     });
   }

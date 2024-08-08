@@ -29,7 +29,13 @@
           <mat-icon matSuffix>key</mat-icon>
         </mat-form-field>
 
-        <button type="submit" class="w-full" mat-button color="primary">
+        <button
+          type="submit"
+          class="w-full"
+          mat-button
+          color="primary"
+          [disabled]="isLoading"
+        >
           Iniciar sesión
         </button>
       </form>

@@ -6,6 +6,10 @@ import { InscriptionsComponent } from './inscriptions/inscriptions.component';
 import { StudentsComponent } from './students/students.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { DetailComponent } from './courses/pages/details/detail.component';
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
+import { CoursesEffects } from './courses/store/courses.effects';
+import { coursesFeature } from './courses/store/courses.reducer';
 
 const routes: Routes = [
   {
@@ -20,6 +24,7 @@ const routes: Routes = [
   {
     path: 'courses',
     component: CoursesComponent,
+    providers: [provideState(coursesFeature), provideEffects(CoursesEffects)],
   },
   {
     path: 'courses/:id',

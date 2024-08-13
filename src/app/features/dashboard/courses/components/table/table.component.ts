@@ -22,9 +22,14 @@ import { CoursesService } from '../../../../../core/services/courses/courses.ser
 import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { FormDialogComponent } from '../form-dialog/form-dialog.component';
 import { RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { CoursesActions } from '../../store/courses.actions';
+import { Observable } from 'rxjs';
+import { selectCourses, selectIsLoading } from '../../store/courses.selectors';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-courses-table',
   standalone: true,
   imports: [
     CommonModule,
@@ -58,13 +63,20 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
+  isLoading$: Observable<boolean>;
+  courses$: Observable<Course[]>;
+
   constructor(
     private courseService: CoursesService,
     private dialog: MatDialog,
-  ) {}
+    private store: Store<RootState>,
+  ) {
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.courses$ = this.store.select(selectCourses);
+  }
 
   loadCourses() {
-    this.courseService.getCourses().subscribe((courses) => {
+    this.courses$.subscribe((courses) => {
       this.dataSource = new MatTableDataSource(courses);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -75,6 +87,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.loadCourses();
+    this.store.dispatch(CoursesActions.loadCourses());
   }
 
   applyFilter(event: Event) {

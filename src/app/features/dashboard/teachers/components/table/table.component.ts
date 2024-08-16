@@ -23,6 +23,16 @@ import { StatusPipe } from '../../../../../shared/pipes/status.pipe';
 import { StatusDirective } from '../../../../../shared/directives/status.directive';
 import { FormDialogComponent } from '../../../../../shared/components/form-dialog/form-dialog.component';
 import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { Observable } from 'rxjs';
+import {
+  selectError,
+  selectIsLoading,
+  selectTeachers,
+} from '../../store/teachers.selectors';
+import { TeachersActions } from '../../store/teachers.actions';
+import { ToastService } from 'angular-toastify';
 
 @Component({
   selector: 'app-teachers-table',
@@ -49,8 +59,6 @@ import { ConfirmDialogComponent } from '../../../../../shared/components/confirm
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
-  isLoading = true;
-  firstLoading = true;
 
   displayedColumns: string[] = teacherColumns;
   dataSource!: MatTableDataSource<Teacher>;
@@ -59,23 +67,36 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(
-    private teacherService: TeachersService,
-    private dialog: MatDialog,
-  ) {}
+  teachers$: Observable<Teacher[]>;
+  isLoading$: Observable<boolean>;
+  isError$: Observable<unknown>;
 
-  loadTeachers() {
-    this.teacherService.getTeachers().subscribe((teachers) => {
-      this.dataSource = new MatTableDataSource(teachers);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
-      this.firstLoading = false;
-    });
+  constructor(
+    private toastService: ToastService,
+    private dialog: MatDialog,
+    private store: Store<RootState>,
+  ) {
+    this.teachers$ = this.store.select(selectTeachers);
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.isError$ = this.store.select(selectError);
   }
 
   ngOnInit() {
-    this.loadTeachers();
+    this.store.dispatch(TeachersActions.loadTeachers());
+
+    this.teachers$.subscribe((teachers) => {
+      this.dataSource = new MatTableDataSource(teachers);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
+    this.isError$.subscribe((error) => {
+      if (error) {
+        const errorMessage = error as any;
+
+        this.toastService.error(errorMessage.error.message);
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -94,15 +115,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (teacher) => {
           if (!!teacher) {
-            this.isLoading = true;
-            this.teacherService.addTeacher(teacher).subscribe({
-              next: (teachers) => {
-                this.loadTeachers();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(TeachersActions.createTeacher({ teacher }));
           }
         },
       });
@@ -117,15 +130,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (teacher) => {
           if (!!teacher) {
-            this.isLoading = true;
-            this.teacherService.updateTeacher(teacher).subscribe({
-              next: (teachers) => {
-                this.loadTeachers();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(TeachersActions.updateTeacher({ teacher }));
           }
         },
       });
@@ -143,15 +148,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.isLoading = true;
-            this.teacherService.deleteTeacher(id).subscribe({
-              next: (teachers) => {
-                this.loadTeachers();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(TeachersActions.deleteTeacher({ id }));
           }
         },
       });

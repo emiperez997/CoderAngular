@@ -7,7 +7,7 @@ export const coursesFeatureKey = 'courses';
 export interface CourseState {
   isLoading: boolean;
   courses: Course[];
-  error: unknown;
+  error: any;
 }
 
 export const initialState: CourseState = {
@@ -18,6 +18,7 @@ export const initialState: CourseState = {
 
 export const reducer = createReducer(
   initialState,
+  // Read
   on(CoursesActions.loadCourses, (state) => {
     console.log('LOAD COURSES');
 
@@ -27,8 +28,6 @@ export const reducer = createReducer(
     };
   }),
   on(CoursesActions.loadCoursesSuccess, (state, { courses }) => {
-    console.log('LOAD COURSES SUCCESS');
-
     return {
       ...state,
       isLoading: false,
@@ -36,7 +35,81 @@ export const reducer = createReducer(
     };
   }),
   on(CoursesActions.loadCoursesFail, (state, { error }) => {
-    console.log('LOAD COURSES FAILURE');
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+  // Create
+  on(CoursesActions.createCourse, (state, { course }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(CoursesActions.createCourseSuccess, (state, { course }) => {
+    return {
+      ...state,
+      isLoading: false,
+      courses: [...state.courses, course],
+    };
+  }),
+  on(CoursesActions.createCourseFail, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+  // Update
+  on(CoursesActions.updateCourse, (state, { course }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(CoursesActions.updateCourseSuccess, (state, { course }) => {
+    return {
+      ...state,
+      isLoading: false,
+      courses: state.courses.map((c) => {
+        if (c.id === course.id) {
+          return course;
+        }
+
+        return c;
+      }),
+    };
+  }),
+  on(CoursesActions.updateCourseFail, (state, { error }) => {
+    console.log('UPDATE COURSE FAILURE');
+
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+  // Delete
+  on(CoursesActions.deleteCourse, (state, { id }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(CoursesActions.deleteCourseSuccess, (state, { id }) => {
+    return {
+      ...state,
+      isLoading: false,
+      courses: state.courses.filter((c) => c.id !== id),
+    };
+  }),
+  on(CoursesActions.deleteCourseFail, (state, { error }) => {
+    console.log('DELETE COURSE FAILURE');
 
     return {
       ...state,

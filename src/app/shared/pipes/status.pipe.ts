@@ -21,6 +21,10 @@ export class StatusPipe implements PipeTransform {
         return 'Programado';
       case 'ACCEPTED':
         return 'Aceptado';
+      case 'STARTED':
+        return 'Iniciado';
+      case 'FINISHED':
+        return 'Terminado';
       default:
         return 'default';
     }

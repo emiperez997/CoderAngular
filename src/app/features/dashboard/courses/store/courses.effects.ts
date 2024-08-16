@@ -27,6 +27,61 @@ export class CoursesEffects {
     );
   });
 
+  createCourse$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CoursesActions.createCourse),
+      concatMap((action) =>
+        this.coursesService.addCourse(action.course).pipe(
+          map((data) => {
+            console.log(data);
+
+            return CoursesActions.createCourseSuccess({ course: data });
+          }),
+          catchError((error) => {
+            console.log(error);
+
+            return of(CoursesActions.createCourseFail({ error }));
+          }),
+        ),
+      ),
+    );
+  });
+
+  updateCourse$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CoursesActions.updateCourse),
+      concatMap((action) =>
+        this.coursesService.updateCourse(action.course).pipe(
+          map((data) => {
+            return CoursesActions.updateCourseSuccess({ course: data });
+          }),
+          catchError((error) => {
+            console.log(error);
+
+            return of(CoursesActions.updateCourseFail({ error }));
+          }),
+        ),
+      ),
+    );
+  });
+
+  deleteCourse$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CoursesActions.deleteCourse),
+      concatMap((action) =>
+        this.coursesService.deleteCourse(action.id).pipe(
+          map((data) => {
+            return CoursesActions.deleteCourseSuccess({ id: data.id });
+          }),
+          catchError((error) => {
+            console.log(error);
+            return of(CoursesActions.deleteCourseFail({ error }));
+          }),
+        ),
+      ),
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private coursesService: CoursesService,

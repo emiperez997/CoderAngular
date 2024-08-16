@@ -18,6 +18,8 @@ export class InscriptionsService {
   }
 
   getInscriptions() {
+    console.log('GET INSCRIPTIONS');
+
     return this.http.get<Inscription[]>(environment.apiUrl + '/inscriptions');
   }
 

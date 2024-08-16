@@ -4,5 +4,5 @@ export const formGroup = {
   id: [''],
   courseId: ['', Validators.required],
   studentId: ['', Validators.required],
-  status: ['', Validators.required],
+  status: ['PENDING', Validators.required],
 };

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ListItem } from './models/ListItem';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { UserToken } from '../../../../core/services/auth/models/UserToken';
 
 @Component({
   selector: 'app-sidenav',
@@ -23,6 +24,7 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
+  user: UserToken | null = null;
   listItems: ListItem[] = [
     {
       name: 'Inicio',
@@ -36,7 +38,7 @@ export class SidenavComponent {
     },
     {
       name: 'Alumnos',
-      icon: 'people',
+      icon: 'groups',
       url: 'students',
     },
     {
@@ -51,7 +53,20 @@ export class SidenavComponent {
     },
   ];
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    const token = this.authService.getToken();
+    if (token) {
+      this.user = this.authService.getUserToken(token);
+
+      if (this.user?.role === 'ADMIN') {
+        this.listItems.push({
+          name: 'Usuarios',
+          icon: 'manage_accounts',
+          url: 'users',
+        });
+      }
+    }
+  }
 
   logout() {
     this.authService.logout();

@@ -22,6 +22,17 @@ import {
   Student,
   studentColumns,
 } from '../../../../../core/services/students/models/Student';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { Observable } from 'rxjs';
+import {
+  selectError,
+  selectIsLoading,
+  selectStudents,
+} from '../../store/students.selectors';
+import { StudentsActions } from '../../store/students.actions';
+import { CdkColumnDef } from '@angular/cdk/table';
+import { ToastService } from 'angular-toastify';
 
 @Component({
   selector: 'app-students-table',
@@ -48,8 +59,6 @@ import {
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
-  isLoading = true;
-  firstLoading = true;
 
   displayedColumns: string[] = studentColumns;
   dataSource!: MatTableDataSource<Student>;
@@ -58,23 +67,36 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(
-    private studentService: StudentsService,
-    private dialog: MatDialog,
-  ) {}
+  students$: Observable<Student[]>;
+  isLoading$: Observable<boolean>;
+  isError$: Observable<any>;
 
-  loadStudents() {
-    this.studentService.getStudents().subscribe((students) => {
-      this.dataSource = new MatTableDataSource(students);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
-      this.firstLoading = false;
-    });
+  constructor(
+    private toastService: ToastService,
+    private dialog: MatDialog,
+    private store: Store<RootState>,
+  ) {
+    this.students$ = this.store.select(selectStudents);
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.isError$ = this.store.select(selectError);
   }
 
   ngOnInit() {
-    this.loadStudents();
+    this.students$.subscribe((students) => {
+      this.dataSource = new MatTableDataSource(students);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
+    this.store.dispatch(StudentsActions.loadStudents());
+
+    this.isError$.subscribe((error) => {
+      if (error) {
+        const errorMessage = error as any;
+
+        this.toastService.error(errorMessage.error.message);
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -93,15 +115,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (student) => {
           if (!!student) {
-            this.isLoading = true;
-            this.studentService.addStudent(student).subscribe({
-              next: (students) => {
-                this.loadStudents();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(StudentsActions.createStudent({ student }));
           }
         },
       });
@@ -116,15 +130,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (student) => {
           if (!!student) {
-            this.isLoading = true;
-            this.studentService.updateStudent(student).subscribe({
-              next: (students) => {
-                this.loadStudents();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(StudentsActions.updateStudent({ student }));
           }
         },
       });
@@ -142,15 +148,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.isLoading = true;
-            this.studentService.deleteStudent(id).subscribe({
-              next: (students) => {
-                this.loadStudents();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(StudentsActions.deleteStudent({ id }));
           }
         },
       });

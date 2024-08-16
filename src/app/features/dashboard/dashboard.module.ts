@@ -11,9 +11,9 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { StudentsComponent } from './students/students.component';
+
 import { HomeComponent } from './home/home.component';
-import { TeachersComponent } from './teachers/teachers.component';
+
 import { AngularToastifyModule } from 'angular-toastify';
 import { AuthService } from '../../core/services/auth/auth.service';
 
@@ -24,8 +24,6 @@ import { AuthService } from '../../core/services/auth/auth.service';
     DashboardRoutingModule,
 
     HomeComponent,
-    StudentsComponent,
-    TeachersComponent,
 
     ToolbarComponent,
     SidenavComponent,

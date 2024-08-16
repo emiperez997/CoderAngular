@@ -23,24 +23,25 @@ const routes: Routes = [
   },
   {
     path: 'courses',
-    component: CoursesComponent,
-    providers: [provideState(coursesFeature), provideEffects(CoursesEffects)],
-  },
-  {
-    path: 'courses/:id',
-    component: DetailComponent,
+    loadChildren: () =>
+      import('./courses/courses.module').then((m) => m.CoursesModule),
   },
   {
     path: 'students',
-    component: StudentsComponent,
+    loadChildren: () =>
+      import('./students/students.module').then((m) => m.StudentsModule),
   },
   {
     path: 'inscriptions',
-    component: InscriptionsComponent,
+    loadChildren: () =>
+      import('./inscriptions/inscriptions.module').then(
+        (m) => m.InscriptionsModule,
+      ),
   },
   {
     path: 'teachers',
-    component: TeachersComponent,
+    loadChildren: () =>
+      import('./teachers/teachers.module').then((m) => m.TeachersModule),
   },
 ];
 

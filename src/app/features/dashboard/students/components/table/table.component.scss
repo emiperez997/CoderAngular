@@ -11,6 +11,11 @@
   height: 100%;
 }
 
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
 .badge {
   display: inline-block;
   padding: 5px 10px;
@@ -36,4 +41,5 @@
 .skeleton-container {
   margin-top: 16px; /* Ajusta el espacio según sea necesario */
   padding: 0 20px;
+  height: 100%;
 }

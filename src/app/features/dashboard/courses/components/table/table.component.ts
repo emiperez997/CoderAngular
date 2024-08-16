@@ -26,7 +26,12 @@ import { Store } from '@ngrx/store';
 import { RootState } from '../../../../../core/store';
 import { CoursesActions } from '../../store/courses.actions';
 import { Observable } from 'rxjs';
-import { selectCourses, selectIsLoading } from '../../store/courses.selectors';
+import {
+  selectCourses,
+  selectError,
+  selectIsLoading,
+} from '../../store/courses.selectors';
+import { ToastService } from 'angular-toastify';
 
 @Component({
   selector: 'app-courses-table',
@@ -53,8 +58,6 @@ import { selectCourses, selectIsLoading } from '../../store/courses.selectors';
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
-  isLoading = true;
-  firstLoading = true;
 
   displayedColumns: string[] = courseColumns;
   dataSource!: MatTableDataSource<Course>;
@@ -63,31 +66,36 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  isLoading$: Observable<boolean>;
   courses$: Observable<Course[]>;
+  isLoading$: Observable<boolean>;
+  isError$: Observable<unknown>;
 
   constructor(
-    private courseService: CoursesService,
+    private toastService: ToastService,
     private dialog: MatDialog,
     private store: Store<RootState>,
   ) {
-    this.isLoading$ = this.store.select(selectIsLoading);
     this.courses$ = this.store.select(selectCourses);
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.isError$ = this.store.select(selectError);
   }
 
-  loadCourses() {
+  ngOnInit() {
+    this.store.dispatch(CoursesActions.loadCourses());
+
     this.courses$.subscribe((courses) => {
       this.dataSource = new MatTableDataSource(courses);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.isLoading = false;
-      this.firstLoading = false;
     });
-  }
 
-  ngOnInit() {
-    this.loadCourses();
-    this.store.dispatch(CoursesActions.loadCourses());
+    this.isError$.subscribe((error) => {
+      if (error) {
+        const errorMessage = error as any;
+
+        this.toastService.error(errorMessage.error.message);
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -99,6 +107,27 @@ export class TableComponent implements OnInit {
     }
   }
 
+  // openForm() {
+  //   this.dialog
+  //     .open(FormDialogComponent)
+  //     .afterClosed()
+  //     .subscribe({
+  //       next: (course) => {
+  //         if (!!course) {
+  //           this.isLoading = true;
+  //           this.courseService.addCourse(course).subscribe({
+  //             next: (courses) => {
+  //               this.loadCourses();
+  //             },
+  //             complete: () => {
+  //               this.isLoading = false;
+  //             },
+  //           });
+  //         }
+  //       },
+  //     });
+  // }
+
   openForm() {
     this.dialog
       .open(FormDialogComponent)
@@ -106,21 +135,13 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (course) => {
           if (!!course) {
-            this.isLoading = true;
-            this.courseService.addCourse(course).subscribe({
-              next: (courses) => {
-                this.loadCourses();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(CoursesActions.createCourse({ course }));
           }
         },
       });
   }
 
-  editStudent(course: Course) {
+  editCourse(course: Course) {
     this.dialog
       .open(FormDialogComponent, {
         data: course,
@@ -129,21 +150,13 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (course) => {
           if (!!course) {
-            this.isLoading = true;
-            this.courseService.updateCourse(course).subscribe({
-              next: (courses) => {
-                this.loadCourses();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(CoursesActions.updateCourse({ course }));
           }
         },
       });
   }
 
-  deleteStudent(id: number) {
+  deleteCourse(id: number) {
     this.dialog
       .open(ConfirmDialogComponent, {
         data: {
@@ -155,15 +168,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.isLoading = true;
-            this.courseService.deleteCourse(id).subscribe({
-              next: (courses) => {
-                this.loadCourses();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(CoursesActions.deleteCourse({ id }));
           }
         },
       });

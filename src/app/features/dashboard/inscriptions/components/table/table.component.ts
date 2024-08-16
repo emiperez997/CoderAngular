@@ -25,6 +25,14 @@ import {
 import { FormDialogComponent } from '../form/form.component';
 import { ToastService } from 'angular-toastify';
 import { getErrorMessage } from '../../../../../shared/utils/errorMessages';
+import { RootState } from '../../../../../core/store';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  selectInscriptions,
+  selectIsLoading,
+} from '../../store/inscriptions.selectors';
+import { InscriptionsActions } from '../../store/inscriptions.actions';
 
 @Component({
   selector: 'app-inscriptions-table',
@@ -52,8 +60,6 @@ import { getErrorMessage } from '../../../../../shared/utils/errorMessages';
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
   @Input() courseId?: number;
-  isLoading = true;
-  firstLoading = true;
 
   displayedColumns: string[] = inscriptionColumns;
   dataSource!: MatTableDataSource<Inscription>;
@@ -62,14 +68,22 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
+  inscriptions$: Observable<Inscription[]>;
+  isLoading$: Observable<boolean>;
+
   constructor(
-    private inscriptionsService: InscriptionsService,
     private dialog: MatDialog,
     private toastService: ToastService,
-  ) {}
+    private store: Store<RootState>,
+  ) {
+    this.inscriptions$ = this.store.select(selectInscriptions);
+    this.isLoading$ = this.store.select(selectIsLoading);
+  }
 
-  loadInscriptions() {
-    this.inscriptionsService.getInscriptions().subscribe((inscriptions) => {
+  ngOnInit() {
+    this.store.dispatch(InscriptionsActions.loadInscriptions());
+
+    this.inscriptions$.subscribe((inscriptions) => {
       if (this.courseId) {
         inscriptions = inscriptions.filter(
           (inscription) => inscription.courseId === this.courseId,
@@ -79,13 +93,7 @@ export class TableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(inscriptions);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.isLoading = false;
-      this.firstLoading = false;
     });
-  }
-
-  ngOnInit() {
-    this.loadInscriptions();
   }
 
   applyFilter(event: Event) {
@@ -104,25 +112,10 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (inscription) => {
           if (!!inscription) {
-            this.isLoading = true;
-            this.inscriptionsService.addInscription(inscription).subscribe({
-              next: (inscriptions) => {
-                this.loadInscriptions();
-              },
-              error: (error) => {
-                this.toastService.error(getErrorMessage(error.error.message));
-                this.isLoading = false;
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(
+              InscriptionsActions.createInscription({ inscription }),
+            );
           }
-        },
-        error: (error) => {
-          console.log(error);
-
-          this.toastService.error(error.error.message);
         },
       });
   }
@@ -136,15 +129,9 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (inscription) => {
           if (!!inscription) {
-            this.isLoading = true;
-            this.inscriptionsService.updateInscription(inscription).subscribe({
-              next: (inscriptions) => {
-                this.loadInscriptions();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(
+              InscriptionsActions.updateInscription({ inscription }),
+            );
           }
         },
       });
@@ -162,15 +149,7 @@ export class TableComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.isLoading = true;
-            this.inscriptionsService.deleteInscription(id).subscribe({
-              next: (inscriptions) => {
-                this.loadInscriptions();
-              },
-              complete: () => {
-                this.isLoading = false;
-              },
-            });
+            this.store.dispatch(InscriptionsActions.deleteInscription({ id }));
           }
         },
       });

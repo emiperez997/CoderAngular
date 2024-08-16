@@ -57,14 +57,21 @@ export class AuthService {
       return of(false);
     }
 
-    const decoded: UserToken = jwtDecode(token);
-    const currentTime = new Date().getTime() / 1000;
+    try {
+      const decoded: UserToken = jwtDecode(token);
+      const currentTime = new Date().getTime() / 1000;
 
-    if (decoded.exp < currentTime) {
-      this.logout();
+      if (decoded.exp < currentTime) {
+        this.logout();
+        return of(false);
+      }
+
+      return of(true);
+    } catch (error: any) {
+      localStorage.removeItem('token');
+      this.store.dispatch(unsetAuthUser());
+      this.router.navigate(['auth']);
       return of(false);
     }
-
-    return of(true);
   }
 }

@@ -40,3 +40,25 @@
 - [ x ] Testing unitarios
   - [ x ] Al menos un archivo de test que testee un servicio
   - [ x ] Al menos un test que testee un componente
+
+# Entrega Final
+
+## Aspectos a incluir
+
+- [ x ] Aplicar Redux global y por feature
+  - [ x ] Crear store para el servicio de auth
+  - [ x ] Crear store para cada feature e implementarlos
+    - [ x ] Students
+    - [ x ] Teachers
+    - [ x ] Inscriptions
+    - [ x ] Courses
+- [ ] Crear vistas de detalle
+  - [ ] Para Alumnos
+  - [ ] Para Profesores
+  - [ x ] Para Cursos
+- [ ] Aplicar manejo de roles
+  - [ ] Crear la tabla para usuarios (Admin)
+  - [ ] Crear servicios para usuarios (Admin)
+  - [ ] Que solo el coordinador pueda hacer un crud en todas las entidadse menos usuarios
+  - [ ] Crear un perfil en el home
+  - [ ] En la barra de navegación, mostrar el nombre del usuario

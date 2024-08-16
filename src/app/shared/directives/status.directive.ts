@@ -19,10 +19,12 @@ export class StatusDirective implements OnChanges {
     switch (this.appStatus) {
       case 'ACTIVE':
       case 'ACCEPTED':
+      case 'STARTED':
         this.elementRef.nativeElement.style.background = 'green';
         break;
       case 'INACTIVE':
       case 'REJECTED':
+      case 'FINISHED':
         this.elementRef.nativeElement.style.background = 'red';
         break;
       case 'PENDING':

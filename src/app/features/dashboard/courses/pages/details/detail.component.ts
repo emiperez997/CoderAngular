@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Course } from '../../../../../core/services/courses/models/Course';
 import { CoursesService } from '../../../../../core/services/courses/courses.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -10,6 +10,13 @@ import { StatusPipe } from '../../../../../shared/pipes/status.pipe';
 import { StatusDirective } from '../../../../../shared/directives/status.directive';
 import { InscriptionsComponent } from '../../../inscriptions/inscriptions.component';
 import { TableComponent as InscriptionsTableComponent } from '../../../inscriptions/components/table/table.component';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store';
+import { InscriptionsActions } from '../../../inscriptions/store/inscriptions.actions';
+import { selectCourse, selectIsLoading } from '../../store/courses.selectors';
+import { Observable } from 'rxjs';
+import { CoursesActions } from '../../store/courses.actions';
+import { selectIsLoading as inscriptinsLoading } from '../../../inscriptions/store/inscriptions.selectors';
 
 @Component({
   selector: 'app-detail',
@@ -27,19 +34,22 @@ import { TableComponent as InscriptionsTableComponent } from '../../../inscripti
     InscriptionsTableComponent,
   ],
 })
-export class DetailComponent {
-  course?: Course;
-  loading = true;
+export class DetailComponent implements OnInit {
+  course$: Observable<Course | null>;
+  isLoading$: Observable<boolean>;
 
   constructor(
-    private courseService: CoursesService,
     private activatedRoute: ActivatedRoute,
+    private store: Store<RootState>,
   ) {
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.course$ = this.store.select(selectCourse);
+  }
+
+  ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
 
-    this.courseService.getCourse(Number(id)).subscribe((course) => {
-      this.course = course;
-      this.loading = false;
-    });
+    this.store.dispatch(CoursesActions.loadCourse({ id: Number(id) }));
+    this.store.dispatch(InscriptionsActions.loadInscriptions());
   }
 }

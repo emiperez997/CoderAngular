@@ -26,13 +26,14 @@ import { FormDialogComponent } from '../form/form.component';
 import { ToastService } from 'angular-toastify';
 import { getErrorMessage } from '../../../../../shared/utils/errorMessages';
 import { RootState } from '../../../../../core/store';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Store, provideState } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 import {
   selectInscriptions,
   selectIsLoading,
 } from '../../store/inscriptions.selectors';
 import { InscriptionsActions } from '../../store/inscriptions.actions';
+import { inscriptionsFeature } from '../../store/inscriptions.reducer';
 
 @Component({
   selector: 'app-inscriptions-table',
@@ -55,11 +56,13 @@ import { InscriptionsActions } from '../../store/inscriptions.actions';
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
-  providers: [InscriptionsService],
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
-  @Input() courseId?: number;
+  @Input() id?: number;
+  @Input() type?: 'course' | 'student';
+
+  @Input() inscriptions: Inscription[] = [];
 
   displayedColumns: string[] = inscriptionColumns;
   dataSource!: MatTableDataSource<Inscription>;
@@ -73,7 +76,6 @@ export class TableComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private toastService: ToastService,
     private store: Store<RootState>,
   ) {
     this.inscriptions$ = this.store.select(selectInscriptions);
@@ -81,13 +83,40 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(InscriptionsActions.loadInscriptions());
+    // this.store.dispatch(InscriptionsActions.loadInscriptions());
+    //
+    // this.inscriptions$.subscribe((inscriptions) => {
+    //   if (this.id) {
+    //     console.log(this.id);
+    //
+    //     inscriptions = inscriptions.filter((inscription) => {
+    //       console.log(inscription);
+    //
+    //       return inscription.courseId === this.id;
+    //     });
+    //   }
+    //
+    //   console.log(inscriptions);
+    //
+    //   this.dataSource = new MatTableDataSource(inscriptions);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    // });
 
     this.inscriptions$.subscribe((inscriptions) => {
-      if (this.courseId) {
-        inscriptions = inscriptions.filter(
-          (inscription) => inscription.courseId === this.courseId,
-        );
+      if (this.id) {
+        switch (this.type) {
+          case 'course':
+            inscriptions = inscriptions.filter(
+              (inscription) => inscription.courseId === this.id,
+            );
+            break;
+          case 'student':
+            inscriptions = inscriptions.filter(
+              (inscription) => inscription.studentId === this.id,
+            );
+            break;
+        }
       }
 
       this.dataSource = new MatTableDataSource(inscriptions);

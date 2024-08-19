@@ -9,6 +9,11 @@ export const selectCourses = createSelector(
   (state: fromCourses.CourseState) => state.courses,
 );
 
+export const selectCourse = createSelector(
+  selectCoursesState,
+  (state: fromCourses.CourseState) => state.course,
+);
+
 export const selectIsLoading = createSelector(
   selectCoursesState,
   (state: fromCourses.CourseState) => state.isLoading,

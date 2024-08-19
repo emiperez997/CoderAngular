@@ -1,3 +1,4 @@
+import { Inscription } from '../../inscriptions/models/Inscription';
 import { Student } from '../../students/models/Student';
 import { Teacher } from '../../teachers/models/Teacher';
 
@@ -10,6 +11,7 @@ export interface Course {
   teacher?: Teacher;
   teacherId: number;
   students?: Student[];
+  inscriptions?: Inscription[];
   status: CourseStatus;
   createdAt: Date;
   updatedAt: Date;

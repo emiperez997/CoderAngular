@@ -1,4 +1,4 @@
-<div *ngIf="loading" class="skeleton-container">
+<div *ngIf="isLoading$ | async" class="skeleton-container">
   <div class="back-button">
     <button mat-icon-button routerLink="/dashboard/courses">
       <mat-icon>arrow_back</mat-icon>
@@ -12,7 +12,7 @@
   <ngx-skeleton-loader [theme]="{ height: '20px' }"></ngx-skeleton-loader>
 </div>
 
-<div *ngIf="!loading">
+<div *ngIf="course$ | async as course">
   <div class="back-button">
     <button mat-icon-button routerLink="/dashboard/courses">
       <mat-icon>arrow_back</mat-icon>
@@ -54,13 +54,16 @@
 
     <small *ngIf="course?.teacher">
       Profesor: {{ course?.teacher?.firstName }}
-      {{ course?.teacher?.lastName }}
+      {{ course.teacher?.lastName }}
     </small>
   </div>
 
   <div class="inscriptions">
     <h3>Inscripciones</h3>
 
-    <app-inscriptions-table [courseId]="course?.id"></app-inscriptions-table>
+    <app-inscriptions-table
+      [id]="course?.id"
+      [type]="'course'"
+    ></app-inscriptions-table>
   </div>
 </div>

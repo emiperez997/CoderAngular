@@ -22,6 +22,22 @@ export class StudentsEffects {
     );
   });
 
+  loadStudent$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StudentsActions.loadStudent),
+      concatMap((action) =>
+        this.studentsService.getStudent(action.id).pipe(
+          map((data) => {
+            return StudentsActions.loadStudentSuccess({ student: data });
+          }),
+          catchError((error) => {
+            return of(StudentsActions.loadStudentFail({ error }));
+          }),
+        ),
+      ),
+    );
+  });
+
   createStudent$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentsActions.createStudent),

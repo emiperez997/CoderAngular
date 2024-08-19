@@ -11,6 +11,11 @@ export const selectStudents = createSelector(
   (state: fromStudents.StudentsState) => state.students,
 );
 
+export const selectStudent = createSelector(
+  selectStudentsState,
+  (state: fromStudents.StudentsState) => state.student,
+);
+
 export const selectIsLoading = createSelector(
   selectStudentsState,
   (state: fromStudents.StudentsState) => state.isLoading,

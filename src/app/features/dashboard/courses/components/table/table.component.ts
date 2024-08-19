@@ -32,6 +32,8 @@ import {
   selectIsLoading,
 } from '../../store/courses.selectors';
 import { ToastService } from 'angular-toastify';
+import { Status } from '../../../../../shared/models/status';
+import { InscriptionStatus } from '../../../../../core/services/inscriptions/models/Inscription';
 
 @Component({
   selector: 'app-courses-table',
@@ -83,8 +85,6 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(CoursesActions.loadCourses());
-
     this.courses$.subscribe((courses) => {
       if (this.id) {
         switch (this.type) {
@@ -92,6 +92,18 @@ export class TableComponent implements OnInit {
             courses = courses.filter((course) => course.teacherId === this.id);
             break;
           case 'student':
+            courses = courses.filter((course) => {
+              if (course.students) {
+                return course.students.some(
+                  (inscription) =>
+                    inscription.studentId === this.id &&
+                    inscription.status === InscriptionStatus.ACCEPTED,
+                );
+              }
+
+              return false;
+            });
+
             break;
         }
       }

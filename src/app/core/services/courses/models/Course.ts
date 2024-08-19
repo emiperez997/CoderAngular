@@ -10,7 +10,7 @@ export interface Course {
   endDate: Date;
   teacher?: Teacher;
   teacherId: number;
-  students?: Student[];
+  students?: Inscription[];
   inscriptions?: Inscription[];
   status: CourseStatus;
   createdAt: Date;

@@ -7,12 +7,14 @@ export const studentsFeatureKey = 'students';
 export interface StudentsState {
   isLoading: boolean;
   students: Student[];
+  student: Student | null;
   error: unknown;
 }
 
 export const initialState: StudentsState = {
   isLoading: false,
   students: [],
+  student: null,
   error: null,
 };
 
@@ -29,6 +31,7 @@ export const reducer = createReducer(
       ...state,
       isLoading: false,
       students: students,
+      student: null,
     };
   }),
   on(StudentsActions.loadStudentsFail, (state, { error }) => {
@@ -38,6 +41,28 @@ export const reducer = createReducer(
       error: error,
     };
   }),
+
+  on(StudentsActions.loadStudent, (state, { id }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(StudentsActions.loadStudentSuccess, (state, { student }) => {
+    return {
+      ...state,
+      isLoading: false,
+      student: student,
+    };
+  }),
+  on(StudentsActions.loadStudentFail, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
   on(StudentsActions.createStudent, (state, { student }) => {
     return {
       ...state,

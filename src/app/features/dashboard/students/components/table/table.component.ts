@@ -33,6 +33,7 @@ import {
 import { StudentsActions } from '../../store/students.actions';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { ToastService } from 'angular-toastify';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-students-table',
@@ -52,6 +53,7 @@ import { ToastService } from 'angular-toastify';
     StatusPipe,
     StatusDirective,
     NgxSkeletonLoaderModule,
+    RouterLink,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',

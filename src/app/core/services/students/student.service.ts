@@ -17,6 +17,10 @@ export class StudentsService {
     return this.http.get<Student[]>(environment.apiUrl + '/students');
   }
 
+  getStudent(id: number): Observable<Student> {
+    return this.http.get<Student>(environment.apiUrl + '/students/' + id);
+  }
+
   addStudent(student: Student): Observable<Student> {
     return this.http.post<Student>(environment.apiUrl + '/students', student);
   }

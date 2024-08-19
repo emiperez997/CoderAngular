@@ -9,19 +9,14 @@ export class InscriptionsEffects {
   loadInscriptions$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(InscriptionsActions.loadInscriptions),
-      tap(() => console.log('LOAD INSCRIPTIONS')),
       concatMap(() =>
         this.inscriptionsService.getInscriptions().pipe(
           map((data) => {
-            console.log(data);
-
             return InscriptionsActions.loadInscriptionsSuccess({
               inscriptions: data,
             });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(InscriptionsActions.loadInscriptionsFail({ error }));
           }),
         ),
@@ -35,15 +30,11 @@ export class InscriptionsEffects {
       concatMap((action) =>
         this.inscriptionsService.addInscription(action.inscription).pipe(
           map((data) => {
-            console.log(data);
-
             return InscriptionsActions.createInscriptionSuccess({
               inscription: data,
             });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(InscriptionsActions.createInscriptionFail({ error }));
           }),
         ),
@@ -62,8 +53,6 @@ export class InscriptionsEffects {
             });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(InscriptionsActions.updateInscriptionFail({ error }));
           }),
         ),
@@ -82,7 +71,6 @@ export class InscriptionsEffects {
             });
           }),
           catchError((error) => {
-            console.log(error);
             return of(InscriptionsActions.deleteInscriptionFail({ error }));
           }),
         ),

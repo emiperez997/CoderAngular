@@ -9,17 +9,12 @@ export class CoursesEffects {
   loadCourses$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CoursesActions.loadCourses),
-      tap(() => console.log('LOAD COURSES')),
       concatMap(() =>
         this.coursesService.getCourses().pipe(
           map((data) => {
-            console.log(data);
-
             return CoursesActions.loadCoursesSuccess({ courses: data });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(CoursesActions.loadCoursesFail({ error }));
           }),
         ),
@@ -33,13 +28,9 @@ export class CoursesEffects {
       concatMap((action) =>
         this.coursesService.getCourse(action.id).pipe(
           map((data) => {
-            console.log(data);
-
             return CoursesActions.loadCourseSuccess({ course: data });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(CoursesActions.loadCourseFail({ error }));
           }),
         ),
@@ -53,13 +44,9 @@ export class CoursesEffects {
       concatMap((action) =>
         this.coursesService.addCourse(action.course).pipe(
           map((data) => {
-            console.log(data);
-
             return CoursesActions.createCourseSuccess({ course: data });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(CoursesActions.createCourseFail({ error }));
           }),
         ),
@@ -76,8 +63,6 @@ export class CoursesEffects {
             return CoursesActions.updateCourseSuccess({ course: data });
           }),
           catchError((error) => {
-            console.log(error);
-
             return of(CoursesActions.updateCourseFail({ error }));
           }),
         ),
@@ -94,7 +79,6 @@ export class CoursesEffects {
             return CoursesActions.deleteCourseSuccess({ id: data.id });
           }),
           catchError((error) => {
-            console.log(error);
             return of(CoursesActions.deleteCourseFail({ error }));
           }),
         ),

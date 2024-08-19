@@ -33,6 +33,7 @@ import {
 } from '../../store/teachers.selectors';
 import { TeachersActions } from '../../store/teachers.actions';
 import { ToastService } from 'angular-toastify';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-teachers-table',
@@ -52,6 +53,7 @@ import { ToastService } from 'angular-toastify';
     StatusPipe,
     StatusDirective,
     NgxSkeletonLoaderModule,
+    RouterLink,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',

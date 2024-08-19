@@ -7,12 +7,14 @@ export const teachersFeatureKey = 'teachers';
 export interface TeachersState {
   isLoading: boolean;
   teachers: Teacher[];
+  teacher: Teacher | null;
   error: unknown;
 }
 
 export const initialState: TeachersState = {
   isLoading: false,
   teachers: [],
+  teacher: null,
   error: null,
 };
 
@@ -28,6 +30,7 @@ export const reducer = createReducer(
     return {
       ...state,
       isLoading: false,
+      teacher: null,
       teachers: teachers,
     };
   }),
@@ -38,6 +41,28 @@ export const reducer = createReducer(
       error: error,
     };
   }),
+
+  on(TeachersActions.loadTeacher, (state, { id }) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(TeachersActions.loadTeacherSuccess, (state, { teacher }) => {
+    return {
+      ...state,
+      isLoading: false,
+      teacher: teacher,
+    };
+  }),
+  on(TeachersActions.loadTeacherFail, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
   on(TeachersActions.createTeacher, (state, { teacher }) => {
     return {
       ...state,

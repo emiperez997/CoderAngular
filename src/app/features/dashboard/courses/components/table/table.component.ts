@@ -58,6 +58,8 @@ import { ToastService } from 'angular-toastify';
 })
 export class TableComponent implements OnInit {
   @Input() createButton: boolean = true;
+  @Input() id?: number;
+  @Input() type?: 'teacher' | 'student';
 
   displayedColumns: string[] = courseColumns;
   dataSource!: MatTableDataSource<Course>;
@@ -84,6 +86,16 @@ export class TableComponent implements OnInit {
     this.store.dispatch(CoursesActions.loadCourses());
 
     this.courses$.subscribe((courses) => {
+      if (this.id) {
+        switch (this.type) {
+          case 'teacher':
+            courses = courses.filter((course) => course.teacherId === this.id);
+            break;
+          case 'student':
+            break;
+        }
+      }
+
       this.dataSource = new MatTableDataSource(courses);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -106,27 +118,6 @@ export class TableComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  // openForm() {
-  //   this.dialog
-  //     .open(FormDialogComponent)
-  //     .afterClosed()
-  //     .subscribe({
-  //       next: (course) => {
-  //         if (!!course) {
-  //           this.isLoading = true;
-  //           this.courseService.addCourse(course).subscribe({
-  //             next: (courses) => {
-  //               this.loadCourses();
-  //             },
-  //             complete: () => {
-  //               this.isLoading = false;
-  //             },
-  //           });
-  //         }
-  //       },
-  //     });
-  // }
 
   openForm() {
     this.dialog

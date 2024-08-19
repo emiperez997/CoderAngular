@@ -83,26 +83,6 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.store.dispatch(InscriptionsActions.loadInscriptions());
-    //
-    // this.inscriptions$.subscribe((inscriptions) => {
-    //   if (this.id) {
-    //     console.log(this.id);
-    //
-    //     inscriptions = inscriptions.filter((inscription) => {
-    //       console.log(inscription);
-    //
-    //       return inscription.courseId === this.id;
-    //     });
-    //   }
-    //
-    //   console.log(inscriptions);
-    //
-    //   this.dataSource = new MatTableDataSource(inscriptions);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
-
     this.inscriptions$.subscribe((inscriptions) => {
       if (this.id) {
         switch (this.type) {

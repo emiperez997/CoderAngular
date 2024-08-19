@@ -45,8 +45,6 @@ export const reducer = createReducer(
     };
   }),
   on(InscriptionsActions.createInscriptionSuccess, (state, { inscription }) => {
-    console.log(inscription);
-
     return {
       ...state,
       isLoading: false,

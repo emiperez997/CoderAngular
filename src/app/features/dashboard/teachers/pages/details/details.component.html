@@ -1,0 +1,50 @@
+<div *ngIf="isLoading$ | async" class="skeleton-container">
+  <div class="back-button">
+    <button mat-icon-button routerLink="/dashboard/courses">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <ngx-skeleton-loader
+    [theme]="{ height: '50px', width: '50%' }"
+  ></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{ height: '100px' }"></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{ height: '80px' }"></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{ height: '20px' }"></ngx-skeleton-loader>
+</div>
+
+<div *ngIf="teacher$ | async as teacher">
+  <div class="back-button">
+    <button mat-icon-button routerLink="/dashboard/teachers">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+
+  <h2>{{ teacher?.firstName }} {{ teacher?.lastName }}</h2>
+
+  <ul>
+    <li>
+      <small>Email: {{ teacher?.email }}</small>
+    </li>
+    <li>
+      <small>
+        Estado:
+        <span
+          class="badge"
+          appStatus="{{ teacher?.status }}"
+          style="padding: 5px 10px"
+        >
+          {{ teacher?.status | status }}
+        </span>
+      </small>
+    </li>
+  </ul>
+
+  <div class="inscriptions">
+    <h3>Cursos</h3>
+
+    <app-courses-table
+      [id]="teacher?.id"
+      [type]="'teacher'"
+    ></app-courses-table>
+  </div>
+</div>

@@ -11,6 +11,11 @@ export const selectTeachers = createSelector(
   (state: fromTeachers.TeachersState) => state.teachers,
 );
 
+export const selectTeacher = createSelector(
+  selectTeachersState,
+  (state: fromTeachers.TeachersState) => state.teacher,
+);
+
 export const selectIsLoading = createSelector(
   selectTeachersState,
   (state: fromTeachers.TeachersState) => state.isLoading,

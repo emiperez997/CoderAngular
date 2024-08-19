@@ -10,17 +10,9 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class CoursesService {
-  private courses: Course[] = [];
-  private timer: number = 1000;
-
-  constructor(
-    private http: HttpClient,
-    private teachersService: TeachersService,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getCourses(): Observable<Course[]> {
-    console.log('GET COURSES');
-
     return this.http.get<Course[]>(environment.apiUrl + '/courses');
   }
 
@@ -29,8 +21,6 @@ export class CoursesService {
   }
 
   addCourse(course: Course): Observable<Course> {
-    console.log(course);
-
     return this.http.post<Course>(environment.apiUrl + '/courses', course);
   }
 

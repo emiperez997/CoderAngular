@@ -22,8 +22,6 @@ export const reducer = createReducer(
   initialState,
   // Read
   on(CoursesActions.loadCourses, (state) => {
-    console.log('LOAD COURSES');
-
     return {
       ...state,
       isLoading: true,
@@ -109,8 +107,6 @@ export const reducer = createReducer(
     };
   }),
   on(CoursesActions.updateCourseFail, (state, { error }) => {
-    console.log('UPDATE COURSE FAILURE');
-
     return {
       ...state,
       isLoading: false,
@@ -133,8 +129,6 @@ export const reducer = createReducer(
     };
   }),
   on(CoursesActions.deleteCourseFail, (state, { error }) => {
-    console.log('DELETE COURSE FAILURE');
-
     return {
       ...state,
       isLoading: false,

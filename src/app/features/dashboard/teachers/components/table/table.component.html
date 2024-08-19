@@ -104,6 +104,14 @@
           >
             <mat-icon>delete</mat-icon>
           </button>
+          <button
+            mat-icon-button
+            color="primary"
+            [disabled]="isLoading$ | async"
+            [routerLink]="row.id"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
         </td>
       </ng-container>
 

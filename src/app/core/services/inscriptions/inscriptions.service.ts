@@ -11,15 +11,9 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class InscriptionsService {
-  private inscriptions: Inscription[];
-
-  constructor(private http: HttpClient) {
-    this.inscriptions = mockInscriptions;
-  }
+  constructor(private http: HttpClient) {}
 
   getInscriptions() {
-    console.log('GET INSCRIPTIONS');
-
     return this.http.get<Inscription[]>(environment.apiUrl + '/inscriptions');
   }
 

@@ -39,12 +39,23 @@
     </li>
   </ul>
 
-  <div class="inscriptions">
+  <div class="courses">
     <h3>Cursos</h3>
 
     <app-courses-table
       [id]="student?.id"
       [type]="'student'"
+      [showHeader]="false"
     ></app-courses-table>
+  </div>
+
+  <div class="inscriptions">
+    <h3>Inscripciones</h3>
+
+    <app-inscriptions-table
+      [id]="student?.id"
+      [type]="'student'"
+      [createButton]="false"
+    ></app-inscriptions-table>
   </div>
 </div>

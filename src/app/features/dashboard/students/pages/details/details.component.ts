@@ -13,8 +13,10 @@ import { RootState } from '../../../../../core/store';
 import { StudentsActions } from '../../store/students.actions';
 import { selectStudent, selectIsLoading } from '../../store/students.selectors';
 import { Observable } from 'rxjs';
-import { TableComponent } from '../../../courses/components/table/table.component';
+import { TableComponent as CourseTableComponent } from '../../../courses/components/table/table.component';
+import { TableComponent as InscriptionsTableComponent } from '../../../inscriptions/components/table/table.component';
 import { CoursesActions } from '../../../courses/store/courses.actions';
+import { InscriptionsActions } from '../../../inscriptions/store/inscriptions.actions';
 
 @Component({
   selector: 'app-details',
@@ -27,7 +29,8 @@ import { CoursesActions } from '../../../courses/store/courses.actions';
     RouterLink,
     StatusPipe,
     StatusDirective,
-    TableComponent,
+    CourseTableComponent,
+    InscriptionsTableComponent,
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
@@ -49,5 +52,6 @@ export class DetailsComponent {
 
     this.store.dispatch(StudentsActions.loadStudent({ id: Number(id) }));
     this.store.dispatch(CoursesActions.loadCourses());
+    this.store.dispatch(InscriptionsActions.loadInscriptions());
   }
 }

@@ -99,6 +99,8 @@ export class TableComponent implements OnInit {
         }
       }
 
+      console.log(inscriptions);
+
       this.dataSource = new MatTableDataSource(inscriptions);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

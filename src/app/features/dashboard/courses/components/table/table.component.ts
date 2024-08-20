@@ -59,7 +59,7 @@ import { InscriptionStatus } from '../../../../../core/services/inscriptions/mod
   styleUrl: './table.component.scss',
 })
 export class TableComponent implements OnInit {
-  @Input() createButton: boolean = true;
+  @Input() showHeader: boolean = true;
   @Input() id?: number;
   @Input() type?: 'teacher' | 'student';
 

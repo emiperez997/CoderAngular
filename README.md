@@ -52,9 +52,9 @@
     - [ x ] Teachers
     - [ x ] Inscriptions
     - [ x ] Courses
-- [ ] Crear vistas de detalle
-  - [ ] Para Alumnos
-  - [ ] Para Profesores
+- [ x ] Crear vistas de detalle
+  - [ x ] Para Alumnos
+  - [ x ] Para Profesores
   - [ x ] Para Cursos
 - [ ] Aplicar manejo de roles
   - [ ] Crear la tabla para usuarios (Admin)

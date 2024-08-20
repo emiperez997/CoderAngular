@@ -8,6 +8,8 @@ import { StudentsEffects } from './store/students.effects';
 import { studentsFeature } from './store/students.reducer';
 import { coursesFeature } from '../courses/store/courses.reducer';
 import { CoursesEffects } from '../courses/store/courses.effects';
+import { inscriptionsFeature } from '../inscriptions/store/inscriptions.reducer';
+import { InscriptionsEffects } from '../inscriptions/store/inscriptions.effects';
 
 const routes: Routes = [
   {
@@ -17,7 +19,12 @@ const routes: Routes = [
   {
     path: ':id',
     component: DetailsComponent,
-    providers: [provideState(coursesFeature), provideEffects(CoursesEffects)],
+    providers: [
+      provideState(coursesFeature),
+      provideEffects(CoursesEffects),
+      provideState(inscriptionsFeature),
+      provideEffects(InscriptionsEffects),
+    ],
   },
 ];
 

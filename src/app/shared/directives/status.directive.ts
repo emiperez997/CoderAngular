@@ -20,6 +20,7 @@ export class StatusDirective implements OnChanges {
       case 'ACTIVE':
       case 'ACCEPTED':
       case 'STARTED':
+      case 'ADMIN':
         this.elementRef.nativeElement.style.background = 'green';
         break;
       case 'INACTIVE':
@@ -29,6 +30,7 @@ export class StatusDirective implements OnChanges {
         break;
       case 'PENDING':
       case 'SCHEDULED':
+      case 'COORDINATOR':
         this.elementRef.nativeElement.style.background = 'orange';
         break;
 

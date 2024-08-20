@@ -20,8 +20,8 @@ export enum InscriptionStatus {
 
 export const inscriptionColumns: string[] = [
   'id',
-  'course',
-  'student',
+  'courseId',
+  'studentId',
   'status',
   'createdAt',
   'updatedAt',

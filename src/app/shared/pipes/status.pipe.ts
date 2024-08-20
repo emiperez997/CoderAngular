@@ -25,6 +25,10 @@ export class StatusPipe implements PipeTransform {
         return 'Iniciado';
       case 'FINISHED':
         return 'Terminado';
+      case 'ADMIN':
+        return 'Administrador';
+      case 'COORDINATOR':
+        return 'Coordinador';
       default:
         return 'default';
     }

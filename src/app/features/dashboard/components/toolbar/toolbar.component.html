@@ -7,7 +7,11 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="mx-2">Platform Learning</span>
+  <span class="mx-2 username">
+    @if (user$ | async) {
+      {{ (user$ | async)?.email }}
+    }
+  </span>
 
   <span class="spacer"></span>
 

@@ -5,11 +5,12 @@ import { UserToken } from '../../../core/services/auth/models/UserToken';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, RouterLink],
+  imports: [CommonModule, MatCardModule, MatButtonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

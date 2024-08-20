@@ -61,4 +61,24 @@
   - [ x ] Crear servicios para usuarios (Admin)
   - [ ] Que solo el coordinador pueda hacer un crud en todas las entidadse menos usuarios
   - [ x ] Crear un perfil en el home
-  - [ ] En la barra de navegación, mostrar el nombre del usuario
+  - [ x ] En la barra de navegación, mostrar el nombre del usuario
+
+# Instrucciones
+
+1. Clonar el repositorio
+
+```bash
+git clone https://github.com/emiperez997/CoderAngular.git
+```
+
+2. Instalar las dependencias
+
+```bash
+pnpm install
+```
+
+3. Iniciar el proyecto
+
+```bash
+ng serve
+```

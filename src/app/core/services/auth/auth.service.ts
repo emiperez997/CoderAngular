@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { Login } from './models/Login';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { UserToken } from './models/UserToken';
 import { unsetAuthUser } from '../../store/auth/auth.actions';
@@ -63,6 +63,36 @@ export class AuthService {
 
       if (decoded.exp < currentTime) {
         this.logout();
+        return of(false);
+      }
+
+      return of(true);
+    } catch (error: any) {
+      localStorage.removeItem('token');
+      this.store.dispatch(unsetAuthUser());
+      this.router.navigate(['auth']);
+      return of(false);
+    }
+  }
+
+  verifyAdmin(): Observable<boolean> {
+    const token = this.getToken();
+
+    if (!token) {
+      return of(false);
+    }
+
+    try {
+      const decoded: UserToken = jwtDecode(token);
+      const currentTime = new Date().getTime() / 1000;
+
+      if (decoded.exp < currentTime) {
+        this.logout();
+        return of(false);
+      }
+
+      if (decoded.role !== 'ADMIN') {
+        this.router.navigate(['dashboard']);
         return of(false);
       }
 

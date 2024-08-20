@@ -8,5 +8,12 @@
     <a mat-button [routerLink]="['/dashboard/teachers']">Profesores</a>
     <a mat-button [routerLink]="['/dashboard/courses']">Cursos</a>
     <a mat-button [routerLink]="['/dashboard/inscriptions']">Inscripciones</a>
+    <a
+      mat-button
+      [routerLink]="['/dashboard/users']"
+      *ngIf="user?.role === 'ADMIN'"
+    >
+      Usuarios
+    </a>
   </mat-card-actions>
 </mat-card>

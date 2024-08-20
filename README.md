@@ -57,8 +57,8 @@
   - [ x ] Para Profesores
   - [ x ] Para Cursos
 - [ ] Aplicar manejo de roles
-  - [ ] Crear la tabla para usuarios (Admin)
-  - [ ] Crear servicios para usuarios (Admin)
+  - [ x ] Crear la tabla para usuarios (Admin)
+  - [ x ] Crear servicios para usuarios (Admin)
   - [ ] Que solo el coordinador pueda hacer un crud en todas las entidadse menos usuarios
-  - [ ] Crear un perfil en el home
+  - [ x ] Crear un perfil en el home
   - [ ] En la barra de navegación, mostrar el nombre del usuario

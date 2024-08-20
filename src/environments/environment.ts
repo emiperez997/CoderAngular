@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://backend-platform-learning.onrender.com/api/',
+  apiUrl: 'https://coderangularbackend.onrender.com/api/',
 };

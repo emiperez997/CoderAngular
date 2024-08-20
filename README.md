@@ -82,3 +82,6 @@ pnpm install
 ```bash
 ng serve
 ```
+
+> [!NOTE]
+> El servidor backend puede que tarde en arrancar, pero una vez que inicia, funciona todo bien

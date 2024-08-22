@@ -1,4 +1,6 @@
 export function getErrorMessage(error: string): string {
+  console.log(error);
+
   if (error.includes('required')) {
     return 'Este campo es requerido';
   }

@@ -18,6 +18,8 @@ export class InscriptionsService {
   }
 
   addInscription(inscription: Inscription) {
+    console.log(inscription);
+
     return this.http.post<Inscription>(
       environment.apiUrl + '/inscriptions',
       inscription,

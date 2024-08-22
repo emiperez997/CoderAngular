@@ -30,10 +30,11 @@ export class StatusDirective implements OnChanges {
         break;
       case 'PENDING':
       case 'SCHEDULED':
-      case 'COORDINATOR':
         this.elementRef.nativeElement.style.background = 'orange';
         break;
-
+      case 'COORDINATOR':
+        this.elementRef.nativeElement.style.background = 'blue';
+        break;
       default:
         this.elementRef.nativeElement.style.background = 'black';
         break;

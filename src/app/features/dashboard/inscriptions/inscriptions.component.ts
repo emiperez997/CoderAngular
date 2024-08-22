@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TableComponent } from './components/table/table.component';
-import { FormDialogComponent } from './components/form/form.component';
+
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Inscription } from '../../../core/services/inscriptions/models/Inscription';
+
 import { RootState } from '../../../core/store';
 import { InscriptionsActions } from './store/inscriptions.actions';
-import { selectInscriptions } from './store/inscriptions.selectors';
 
 @Component({
   selector: 'app-inscriptions',
@@ -18,5 +15,6 @@ export class InscriptionsComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(InscriptionsActions.loadInscriptions());
+    this.store.dispatch(InscriptionsActions.resetError());
   }
 }

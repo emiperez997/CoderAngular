@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from '../../../../../core/services/users/users.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +32,9 @@ import {
   selectError,
 } from '../../store/users.selectors';
 import { ToastService } from 'angular-toastify';
+import { FormDialogComponent } from '../form-dialog/form-dialog.component';
+import { UsersActions } from '../../store/users.actions';
+import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-users-table',
@@ -72,6 +75,7 @@ export class TableComponent implements OnInit {
 
   constructor(
     private store: Store<RootState>,
+    private dialog: MatDialog,
     private toastService: ToastService,
   ) {
     this.users$ = this.store.select(selectUsers);
@@ -104,5 +108,53 @@ export class TableComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openForm() {
+    this.dialog
+      .open(FormDialogComponent)
+      .afterClosed()
+      .subscribe({
+        next: (user) => {
+          if (!!user) {
+            this.store.dispatch(UsersActions.createUser({ user }));
+          }
+        },
+      });
+  }
+
+  editStudent(user: User) {
+    this.dialog
+      .open(FormDialogComponent, {
+        data: user,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (user) => {
+          if (!!user) {
+            console.log(user);
+
+            this.store.dispatch(UsersActions.updateUser({ user }));
+          }
+        },
+      });
+  }
+
+  deleteStudent(id: number) {
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: {
+          title: 'Confirmar Eliminación',
+          message: '¿Está seguro de eliminar este alumno?',
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.store.dispatch(UsersActions.deleteUser({ id }));
+          }
+        },
+      });
   }
 }

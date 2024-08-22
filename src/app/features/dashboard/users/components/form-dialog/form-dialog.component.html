@@ -1,1 +1,73 @@
-<p>form-dialog works!</p>
+<h2 mat-dialog-title>{{ isEditing ? "Editar" : "Crear" }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="createForm">
+    @if (isEditing) {
+      <mat-form-field appearance="fill">
+        <mat-label>ID</mat-label>
+        <input matInput disabled value="{{ editingUser?.id }}" />
+      </mat-form-field>
+    }
+
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input
+        [ngClass]="{
+          'is-invalid': createForm.get('email')?.invalid,
+          'is-valid': inputValid('email') && createForm.get('email')?.dirty,
+        }"
+        matInput
+        name="email"
+        formControlName="email"
+      />
+
+      <mat-error> {{ getError("email") }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Contraseña</mat-label>
+      <input
+        [ngClass]="{
+          'is-invalid': inputInvalid('password'),
+          'is-valid':
+            inputValid('password') && createForm.get('password')?.dirty,
+        }"
+        matInput
+        type="password"
+        name="password"
+        formControlName="password"
+      />
+
+      <mat-error> {{ getError("password") }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Estado</mat-label>
+      <mat-select name="status" formControlName="status">
+        <mat-option value="ACTIVE">Activo</mat-option>
+        <mat-option value="INACTIVE">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Rol</mat-label>
+      <mat-select name="role" formControlName="role">
+        <mat-option value="ADMIN">Administrador</mat-option>
+        <mat-option value="COORDINATOR">Coordinador</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  @if (inputValid("email") || inputValid("password")) {
+    <button mat-button (click)="onSubmit()">
+      {{ isEditing ? "Editar" : "Crear" }}
+    </button>
+  } @else {
+    <button mat-button [disabled]="true">
+      {{ isEditing ? "Editar" : "Crear" }}
+    </button>
+  }
+</mat-dialog-actions>

@@ -40,7 +40,7 @@ export class UsersService {
   }
 
   updateUser(user: User): Observable<User> {
-    return this.http.put<User>(environment.apiUrl + '/users', user, {
+    return this.http.put<User>(environment.apiUrl + '/users/' + user.id, user, {
       headers: this.getHeaders(),
     });
   }

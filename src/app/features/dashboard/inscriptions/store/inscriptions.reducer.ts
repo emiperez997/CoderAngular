@@ -106,6 +106,13 @@ export const reducer = createReducer(
       error: error,
     };
   }),
+
+  on(InscriptionsActions.resetError, (state) => {
+    return {
+      ...state,
+      error: null,
+    };
+  }),
 );
 
 export const inscriptionsFeature = createFeature({

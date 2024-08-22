@@ -41,6 +41,74 @@ export const reducer = createReducer(
       error: error,
     };
   }),
+
+  on(UsersActions.createUser, (state) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(UsersActions.createUserSuccess, (state, { user }) => {
+    return {
+      ...state,
+      isLoading: false,
+      user: null,
+      users: [...state.users, user],
+    };
+  }),
+  on(UsersActions.createUserFail, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+  on(UsersActions.updateUser, (state) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(UsersActions.updateUserSuccess, (state, { user }) => {
+    return {
+      ...state,
+      isLoading: false,
+      user: null,
+      users: state.users.map((u) => {
+        return u.id === user.id ? user : u;
+      }),
+    };
+  }),
+  on(UsersActions.updateUserFail, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+  on(UsersActions.deleteUser, (state) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(UsersActions.deleteUserSuccess, (state, { id }) => {
+    return {
+      ...state,
+      isLoading: false,
+      user: null,
+      users: state.users.filter((u) => u.id !== id),
+    };
+  }),
+  on(UsersActions.deleteUserFail, (state, { error }) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
 );
 
 export const usersFeature = createFeature({

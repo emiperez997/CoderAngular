@@ -17,7 +17,7 @@ import { StatusPipe } from '../../../../../shared/pipes/status.pipe';
 import { StatusDirective } from '../../../../../shared/directives/status.directive';
 
 import { ConfirmDialogComponent } from '../../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { InscriptionsService } from '../../../../../core/services/inscriptions/inscriptions.service';
+
 import {
   Inscription,
   inscriptionColumns,
@@ -26,14 +26,14 @@ import { FormDialogComponent } from '../form/form.component';
 import { ToastService } from 'angular-toastify';
 import { getErrorMessage } from '../../../../../shared/utils/errorMessages';
 import { RootState } from '../../../../../core/store';
-import { Store, provideState } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import {
+  selectError,
   selectInscriptions,
   selectIsLoading,
 } from '../../store/inscriptions.selectors';
 import { InscriptionsActions } from '../../store/inscriptions.actions';
-import { inscriptionsFeature } from '../../store/inscriptions.reducer';
 
 @Component({
   selector: 'app-inscriptions-table',
@@ -73,13 +73,16 @@ export class TableComponent implements OnInit {
 
   inscriptions$: Observable<Inscription[]>;
   isLoading$: Observable<boolean>;
+  isError$: Observable<any>;
 
   constructor(
     private dialog: MatDialog,
     private store: Store<RootState>,
+    private toastService: ToastService,
   ) {
     this.inscriptions$ = this.store.select(selectInscriptions);
     this.isLoading$ = this.store.select(selectIsLoading);
+    this.isError$ = this.store.select(selectError);
   }
 
   ngOnInit() {
@@ -99,11 +102,17 @@ export class TableComponent implements OnInit {
         }
       }
 
-      console.log(inscriptions);
-
       this.dataSource = new MatTableDataSource(inscriptions);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    });
+
+    this.isError$.subscribe((error) => {
+      if (error) {
+        const errorMessage = error as any;
+
+        this.toastService.error(errorMessage.error.message);
+      }
     });
   }
 

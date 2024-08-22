@@ -22,4 +22,5 @@ export const userColumns: string[] = [
   'role',
   'createdAt',
   'updatedAt',
+  'actions',
 ];

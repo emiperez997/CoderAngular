@@ -1,0 +1,29 @@
+mat-card {
+  height: auto;
+  min-width: 200px;
+}
+
+mat-card-title {
+  @media (width < 500px) {
+    font-size: 1rem;
+  }
+  @media (width >= 500px) {
+    font-size: 1.5rem;
+  }
+}
+
+mat-card-subtitle {
+  @media (width < 500px) {
+    font-size: 0.8rem;
+  }
+  @media (width >= 500px) {
+    font-size: 1.2rem;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}

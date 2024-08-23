@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,7 +39,6 @@ import {
   selectIsLoading,
 } from '../../store/courses.selectors';
 import { ToastService } from 'angular-toastify';
-import { Status } from '../../../../../shared/models/status';
 import { InscriptionStatus } from '../../../../../core/services/inscriptions/models/Inscription';
 
 @Component({
@@ -55,6 +61,7 @@ import { InscriptionStatus } from '../../../../../core/services/inscriptions/mod
     NgxSkeletonLoaderModule,
     RouterLink,
   ],
+
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
@@ -64,11 +71,11 @@ export class TableComponent implements OnInit {
   @Input() type?: 'teacher' | 'student';
 
   displayedColumns: string[] = courseColumns;
-  dataSource!: MatTableDataSource<Course>;
+  dataSource = new MatTableDataSource<Course>();
   skeletonRows: any[] = Array(5).fill({});
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
   courses$: Observable<Course[]>;
   isLoading$: Observable<boolean>;
@@ -84,7 +91,7 @@ export class TableComponent implements OnInit {
     this.isError$ = this.store.select(selectError);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.courses$.subscribe((courses) => {
       if (this.id) {
         switch (this.type) {
@@ -109,8 +116,11 @@ export class TableComponent implements OnInit {
       }
 
       this.dataSource = new MatTableDataSource(courses);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, 1000);
     });
 
     this.isError$.subscribe((error) => {

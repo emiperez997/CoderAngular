@@ -69,7 +69,7 @@ export class TableComponent implements OnInit {
   skeletonRows: any[] = Array(5).fill({});
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort) sort!: MatSort;
 
   inscriptions$: Observable<Inscription[]>;
   isLoading$: Observable<boolean>;
@@ -103,8 +103,11 @@ export class TableComponent implements OnInit {
       }
 
       this.dataSource = new MatTableDataSource(inscriptions);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, 1000);
     });
 
     this.isError$.subscribe((error) => {

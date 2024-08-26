@@ -88,8 +88,11 @@ export class TableComponent implements OnInit {
 
     this.teachers$.subscribe((teachers) => {
       this.dataSource = new MatTableDataSource(teachers);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, 1000);
     });
 
     this.isError$.subscribe((error) => {

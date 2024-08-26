@@ -85,11 +85,12 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.users$.subscribe((users) => {
-      console.log(users);
-
       this.dataSource = new MatTableDataSource(users);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+      setTimeout(() => {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, 1000);
     });
 
     this.isError$.subscribe((error) => {

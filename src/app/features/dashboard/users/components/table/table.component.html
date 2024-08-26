@@ -21,13 +21,13 @@
   }
 </div>
 
-<div class="mat-elevation-z8 table-container">
-  <!-- <div class="skeleton-container"> -->
-  <!--   <div class="skeleton-text" *ngFor="let row of skeletonRows"> -->
-  <!--     <ngx-skeleton-loader [theme]="{ height: '16px' }"></ngx-skeleton-loader> -->
-  <!--   </div> -->
-  <!-- </div> -->
+<div *ngIf="isLoading$ | async">
+  <div class="skeleton-container">
+    <div class="skeleton"></div>
+  </div>
+</div>
 
+<div class="mat-elevation-z8 table-container" *ngIf="!(isLoading$ | async)">
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- ID Column -->
     <ng-container matColumnDef="id">
